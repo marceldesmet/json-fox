@@ -1,0 +1,97 @@
+
+
+
+
+
+01/05/2025 01:37:29 PM - Error 1001 in TestMethod at line 10
+Variable '' is not found.
+01/05/2025 01:38:15 PM - Error 1001 in TestMethod at line 10
+Variable 'GOAPP' is not found.
+01/05/2025 01:38:48 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:43:48 PM - Error 1001 in TestMethod at line 10
+Variable '00000001: Incorrect function' is not found.
+01/05/2025 01:43:48 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:43:51 PM - Error 1001 in TestMethod at line 10
+Variable 'GOAPP' is not found.
+01/05/2025 01:43:51 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:44:05 PM - Error 1001 in TestMethod at line 10
+Variable 'CCMD' is not found.
+01/05/2025 01:44:05 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:52:19 PM - Error 1001 in TestMethod at line 10
+Variable 'CCMD' is not found.
+01/05/2025 01:52:19 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:53:34 PM - Error 1001 in TestMethod at line 10
+Variable 'CCMD' is not found.
+01/05/2025 01:54:29 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:54:44 PM - Error 1001 in TestMethod at line 10
+Variable 'GOAPP' is not found.
+01/05/2025 01:55:15 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:55:44 PM - Error 1001 in TestMethod at line 10
+Variable 'GOAPP' is not found.
+01/05/2025 01:56:00 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:56:00 PM - Error 12 in seterror at line 58
+Variable 'LCERRORMSG' is not found.
+01/05/2025 01:57:38 PM - Error 1001 in TestMethod at line 10
+Variable 'GOAPP' is not found.
+01/05/2025 01:57:40 PM - Error 12 in seterror at line 58
+Variable 'LCERRORMSG' is not found.
+01/05/2025 01:57:53 PM - Error 3003 in TestMethod at line 20
+Variable 'GOAPP' is not found.
+01/05/2025 01:57:53 PM - Error 12 in seterror at line 58
+Variable 'LCERRORMSG' is not found.
+01/05/2025 01:58:11 PM - Error 1001 in TestMethod at line 10
+Variable 'GOAPP' is not found.
+01/05/2025 02:00:12 PM - Error 1001 in TestMethod at line 10
+Variable 'CCMD' is not found.
+01/05/2025 02:00:42 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:01:19 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:02:20 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:02:20 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:02:27 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:02:38 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:02:43 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:03:30 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:03:30 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:04:46 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:04:46 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:05:09 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:05:13 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:05:25 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:05:30 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:05:57 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:06:31 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:06:43 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:08:16 PM - Error 3003 in TestMethod at line 20
+Operator/operand type mismatch.
+01/05/2025 02:08:31 PM - Error 1001 in TestMethod at line 10
+Operator/operand type mismatch.
+01/05/2025 02:09:58 PM - Error 1001 in TestMethod at line 10
+Error code is not valid.
+01/05/2025 02:09:58 PM - Error 3003 in TestMethod at line 20
+Error code is not valid.

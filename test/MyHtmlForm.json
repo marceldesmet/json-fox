@@ -1,0 +1,73 @@
+{
+    "title": "User Registration",
+    "fields": [
+      {
+        "type": "text",
+        "label": "First Name",
+        "name": "firstName",
+        "required": true,
+        "placeholder": "Enter your first name",
+        "col": "col-md-6"
+      },
+      {
+        "type": "text",
+        "label": "Last Name",
+        "name": "lastName",
+        "required": true,
+        "placeholder": "Enter your last name",
+        "col": "col-md-6"
+      },
+      {
+        "type": "email",
+        "label": "Email",
+        "name": "email",
+        "required": true,
+        "placeholder": "Enter your email",
+        "col": "col-md-12"
+      },
+      {
+        "type": "password",
+        "label": "Password",
+        "name": "password",
+        "required": true,
+        "placeholder": "Enter your password",
+        "col": "col-md-12"
+      },
+      {
+        "type": "select",
+        "label": "Country",
+        "name": "country",
+        "required": true,
+        "options": [
+          { "value": "", "label": "Select your country" },
+          { "value": "us", "label": "United States" },
+          { "value": "ca", "label": "Canada" },
+          { "value": "uk", "label": "United Kingdom" }
+        ],
+        "col": "col-md-6"
+      },
+      {
+        "type": "radio",
+        "label": "Gender",
+        "name": "gender",
+        "required": true,
+        "options": [
+          { "value": "male", "label": "Male" },
+          { "value": "female", "label": "Female" }
+        ],
+        "col": "col-md-6"
+      },
+      {
+        "type": "checkbox",
+        "label": "Agree to Terms",
+        "name": "terms",
+        "required": true,
+        "col": "col-md-12"
+      },
+      {
+        "type": "submit",
+        "label": "Register",
+        "col": "col-md-12"
+      }
+    ]
+  }
