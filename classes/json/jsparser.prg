@@ -1,43 +1,114 @@
-#INCLUDE C:\Webconnectionprojects\WebNode\devtools\json-fox\json-fox.h
+#INCLUDE json-fox.h
+
+* Version 1.0.1
+* ResetError(THIS) is a function THIS.ResetError() is osolete
 
 define class Parser as jscustom
 	tokens = .null.
 	currentIndex = 0
 	nArrayLevel = 0 		&& Track the array level for error checking
-
+	name = "Parser"
+	Unicode  = .F. 			&& Set to .T. to decode Unicode escape sequences in the parsed object
+	IsJsonLdObject = .F.    && Handle JSON-LD objects with @context and @type properties
+	rdFoxprofix = "object_"	&& Prefix Json object for FoxPro object properties with "rd_"
+	HandleComments = .F. 	&& Set to .T. to remove comments from the JSON string
+	
 	function parseJson(tcInput)
-		local loTokenizer, loObject
+
+		local loTokenizer, loObject, loUnicodeObject
+
+		if vartype(tcInput)<> T_CHARACTER .or. empty(tcInput)
+			SetError(THIS,"Wrong input string",JS_FATAL_ERROR)
+			return .null.
+		endif
+
+		IF THIS.HandleComments = .T. 
+			* Remove comments
+			tcInput = this.removeComments(tcInput)
+		ENDIF
+
+		* lcDateSet = set('Date')
+		* set date ymd
+
+		* Clear some special characters
+		tcInput = chrtran(tcInput, chr(9),'')			&& Tab
+		tcInput = chrtran(tcInput, chr(10),'')			&& Linefeed
+		tcInput = chrtran(tcInput, chr(13),'')			&& Carriage return
+		* We don't remove space because they are part of the JSON string
+		
+
 		loTokenizer = createobject("Tokenizer")
 		this.tokens = loTokenizer.tokenize(tcInput)
+
+		if loTokenizer.nError = JS_FATAL_ERROR .or. vartype(this.tokens) <> T_OBJECT
+			SetError(THIS,loTokenizer.cerrormsg,JS_FATAL_ERROR)
+			return .null.
+		endif
+
+		* Setup for parsing
 		this.currentIndex = 1
+		* this.nArrayLevel = 0    #TODO Implement support for multi-dimensional arrays
+		ResetError(THIS)
+
 		loObject = this.parseObject()
+
+		* Reset to previous VFP settings
+		* set date &lcDateSet
+
+		if this.nError = JS_FATAL_ERROR
+			SetError(THIS,this.cerrormsg,JS_FATAL_ERROR)
+			return .null.
+		endif
+
+		* Decode Unicode escape sequences in the parsed object
+		IF THIS.Unicode = .T. 
+			loUnicodeObject = createobject("JsonTranslateUnicode")
+			loObject = loUnicodeObject.DecodeUnicodeInObject(loObject)
+		endif 
+		
 		return loObject
+
 	endfunc
 
 	function parseObject()
-		
+
 		local loObject, lcToken, lcKey, lvValue, lcType, lcProperty, lcValuetype
+
+		* Check where we are in the token list
+		lcToken = this.tokens.item(this.currentIndex)
+
+		* '{' token begins a object
+		if lcToken != JS_LBRACE
+			SetError(THIS,"Expected a '{' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+			RETURN .NULL.
+		endif
 
 		* Create an empty object
 		loObject = createobject("Empty")
-		* Skip '{' token begins a object
+
+		* Check for empty object
+		if this.tokens.item(this.currentIndex+1) == JS_RBRACE
+			this.currentIndex = this.currentIndex + 2  && Skip '{' and '}'
+			return loObject
+		endif 
+
 		this.currentIndex = this.currentIndex + 1  && Skip '{'
 
 		do while this.currentIndex <= this.tokens.count .and. this.tokens.item(this.currentIndex) != JS_RBRACE
 			* Next token is a string property name
 			lcType = this.tokens.item(this.currentIndex)
-			this.currentIndex = this.currentIndex + 1  && Skip type token set for properties and values
 			if lcType != JS_STRING
-				* #TODO Fatal Error - Expected a string property name
+				SetError(THIS,"Expected a string property name",JS_FATAL_ERROR)
 				exit
 			else
+				this.currentIndex = this.currentIndex + 1  		&& Skip type token set for properties and values
 				lcProperty = this.tokens.item(this.currentIndex)
-				this.currentIndex = this.currentIndex + 1  && Skip Property Name
+				this.currentIndex = this.currentIndex + 1  		&& Next token is a colon
 			endif
 			if this.tokens.item(this.currentIndex) == JS_COLON
-				this.currentIndex = this.currentIndex + 1  && Skip ':'
+				this.currentIndex = this.currentIndex + 1  		 && Skip ':'
 			else
-				* #TODO Fatal Error - Expected a colon
+				SetError(THIS,"Expected a colon ':' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
 				exit
 			endif
 
@@ -48,11 +119,11 @@ define class Parser as jscustom
 				case lcToken == JS_LBRACE
 					lvValue = this.parseObject()
 				case lcToken == JS_LBRACKET
-					lvValue = this.parseArray(THIS.nArrayLevel + 1)
+					lvValue = this.parseArray(this.nArrayLevel + 1)
 				otherwise
 					* Value of the property is not a array or object we now expect a valuetype
-					this.currentIndex = this.currentIndex + 1
 					lcValuetype = lcToken
+					this.currentIndex = this.currentIndex + 1  && Skip the valuetype token
 
 					do case
 						case lcValuetype == JS_BOOLEAN
@@ -71,40 +142,65 @@ define class Parser as jscustom
 						case lcValuetype == JS_STRING
 							lvValue = this.tokens.item(this.currentIndex)
 						otherwise
-							* #TODO Fatal Error - Expected a colon
+							SetError(THIS,"Expected a valuetype not " + lcValuetype ,JS_FATAL_ERROR)
 							exit
 					endcase
+					* Skip the value token
+					this.currentIndex = this.currentIndex + 1
 
 			endcase
-			
-			* Add the property to the object
-			addproperty(loObject, lcProperty, lvValue)
-			this.currentIndex = this.currentIndex + 1
 
-			* Exit if we have reached the end of the tokens
-			if this.currentIndex > this.tokens.count
-				exit
-			endif
+			* Add the property and value to the object
+			IF THIS.IsJsonLdObject
+				THIS.HandleJsonLDobject(@loObject, lcProperty, lvValue)
+			ELSE 
+				addproperty(loObject, lcProperty, lvValue)
+			ENDIF
 
-			if this.tokens.item(this.currentIndex) == JS_COMMA && Skip ',' for next property
+			lcToken = this.tokens.item(this.currentIndex)
+
+			if lctoken == JS_COMMA && Skip ',' for next property
 				this.currentIndex = this.currentIndex + 1
+			else
+				* Here we have reached the end of the object
+				IF lctoken != JS_RBRACE
+					SetError(THIS,"Expected a '}' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+				ENDIF
 			endif
 
 		enddo
 
-		this.currentIndex = this.currentIndex + 1  && Skip '}'
+		this.currentIndex = this.currentIndex + 1  	&& Skip '}'	
+
 		return loObject
 
 	endfunc
 
 	function parseArray(tnIndentLevel)
 
-		THIS.nArrayLevel = tnIndentLevel	&& Track the array level for error checking
-		
+		* #TODO Implement support native VFP arrays and multi-dimensional arrays
+		* Track the array level for error checking
+		this.nArrayLevel = tnIndentLevel
+
 		local loArray, lcToken, lvValue
-		
+
+		lcToken = this.tokens.item(this.currentIndex)
+
+		if lcToken != JS_LBRACKET
+			SetError(THIS,"Expected a '[' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+			RETURN .NULL.
+		endif
+
 		* Create an empty array object
 		loArray = createobject("Collection")
+
+		* Check for empty array
+		if this.tokens.item(this.currentIndex+1) == JS_RBRACKET
+			this.currentIndex = this.currentIndex + 2  && Skip '[' and ']'
+			return loArray
+		endif
+		
+		* Ok skip '[' we have a array with values
 		this.currentIndex = this.currentIndex + 1  && Skip '['
 
 		do while this.currentIndex <= this.tokens.count .and. this.tokens.item(this.currentIndex) != JS_RBRACKET
@@ -115,7 +211,7 @@ define class Parser as jscustom
 				case lcToken == JS_LBRACE
 					lvValue = this.parseObject()
 				case lcToken == JS_LBRACKET
-					lvValue = this.parseArray(THIS.nArrayLevel + 1)
+					lvValue = this.parseArray(this.nArrayLevel + 1)
 				otherwise
 					this.currentIndex = this.currentIndex + 1  && ready  to get the value
 					do case
@@ -137,30 +233,34 @@ define class Parser as jscustom
 						otherwise
 							lvValue = lcToken
 					endcase
+					this.currentIndex = this.currentIndex + 1  && ready  to get the comma
 			endcase
 
 			loArray.add(lvValue)
-			this.currentIndex = this.currentIndex + 1
-
-			* Exit if we have reached the end of the tokens
-			if this.currentIndex > this.tokens.count
-				exit
-			endif
-
+			
 			* Skip comma
-			if this.tokens.item(this.currentIndex) == JS_COMMA  
+			if this.tokens.item(this.currentIndex) == JS_COMMA
 				this.currentIndex = this.currentIndex + 1
+			else
+				* Here we have reached the end of the array
+				if this.tokens.item(this.currentIndex) != JS_RBRACKET
+					SetError(THIS,"Expected a ']' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+				endif
 			endif
 
 		enddo
-		* Skip ']'
-		this.currentIndex = this.currentIndex + 1 
 
+		this.currentIndex = this.currentIndex + 1 		&& Skip ']'
 		return loArray
+
 	endfunc
 
 	function parseDate(lcDateString)
 		local lnYear, lnMonth, lnDay, lnHour, lnMinute, lnSecond, lcDatePart, lcTimePart, lcTimeZonePart
+
+		IF LOWER(lcDateString) = "null"
+			RETURN {}
+		ENDIF 
 
 		* Initialize default values
 		lnYear = 0
@@ -183,6 +283,7 @@ define class Parser as jscustom
 		endif
 
 		* Parse the date part
+		* Json format 2023-05-15"
 		lnYear = val(substr(lcDatePart, 1, 4))
 		lnMonth = val(substr(lcDatePart, 6, 2))
 		lnDay = val(substr(lcDatePart, 9, 2))
@@ -202,4 +303,73 @@ define class Parser as jscustom
 		endif
 	endfunc
 
+	function removeComments(tcInput)
+		local lcOutput, lnPos, lcChar, lcNextChar, lnLength, lbInString
+
+		lcOutput = ""
+		lnPos = 1
+		lnLength = len(tcInput)
+		lbInString = .F.
+
+		do while lnPos <= lnLength
+			lcChar = substr(tcInput, lnPos, 1)
+			lcNextChar = iif(lnPos < lnLength, substr(tcInput, lnPos + 1, 1), "")
+
+			if lcChar = '"' .and. (lnPos = 1 .or. substr(tcInput, lnPos - 1, 1) # "\")
+				lbInString = !lbInString
+			endif
+
+			if !lbInString
+				if lcChar = "/" .and. lcNextChar = "/"
+					* Single-line comment
+					do while lnPos <= lnLength .and. substr(tcInput, lnPos, 1) # chr(10)
+						lnPos = lnPos + 1
+					enddo
+				else
+					if lcChar = "/" .and. lcNextChar = "*"
+						* Multi-line comment
+						lnPos = lnPos + 2
+						do while lnPos <= lnLength - 1 .and. (substr(tcInput, lnPos, 2) # "*/")
+							lnPos = lnPos + 1
+						enddo
+						lnPos = lnPos + 1
+					else
+						lcOutput = lcOutput + lcChar
+					endif
+				endif
+			else
+				lcOutput = lcOutput + lcChar
+			endif
+
+			lnPos = lnPos + 1
+		enddo
+
+		return lcOutput
+
+	endfunc
+
+	* Handle JSON-LD objects with @context and @type @id properties
+	function HandleJsonLDobject(roObject, tcProperty, tvValue)
+		IF LEFT(tcProperty, 1) == "@"
+			* Handle JSON-LD keywords by storing them in a special property
+			lcProperty = this.rdFoxprofix + SUBSTR(tcProperty,2)
+		ELSE
+			lcProperty = tcProperty
+		ENDIF
+		addproperty(roObject, lcProperty, tvValue)			
+	endfunc 
+
+	FUNCTION ISBINARY(tcValue)
+		* Check if the value contains non-printable characters
+		LOCAL lnIndex, lnLength, lcChar
+		lnLength = LEN(tcValue)
+		FOR lnIndex = 1 TO lnLength
+			lcChar = SUBSTR(tcValue, lnIndex, 1)
+			IF ASC(lcChar) < 32 OR ASC(lcChar) > 126
+				RETURN .T.
+			ENDIF
+		ENDFOR
+		RETURN .F.
+	ENDFUNC
+	
 enddefine

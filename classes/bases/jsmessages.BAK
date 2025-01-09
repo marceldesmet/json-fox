@@ -1,4 +1,7 @@
-#INCLUDE C:\Webconnectionprojects\WebNode\devtools\json-fox\json-fox.h 
+#INCLUDE json-fox.h
+
+* Version 1.0.1.
+* Missing function ResetError() 
 
 FUNCTION ErrorHandler(toCallingObject, tcMessage, tnError, tcMethod, tnLine)
 
@@ -27,10 +30,30 @@ FUNCTION ErrorHandler(toCallingObject, tcMessage, tnError, tcMethod, tnLine)
 			.cErrorMsg = lcMessage
 			.cErrorMethod = tcMethod
 		ENDWITH 
+		IF VARTYPE(toCallingObject.Name) = T_CHARACTER
+			lcMethod = toCallingObject.Name + "." + lcMethod + "()"
+		ENDIF
 	ENDIF 
-	    
-	lcMessage ="Error "+ TRANSFORM(lnError) +" in "+ lcMethod + " at line " + TRANSFORM(lnLine) + CHR(13)+CHR(10) + lcMessage
-    SET TEXTMERGE TO error.log ADDITIVE NOSHOW
+	
+	IF VARTYPE(REQUEST)="O" .AND. PEMSTATUS(REQUEST,'GetRequestId',5)
+	    * If REQUEST is an object, include the request ID in the error message
+	    lcMessage = "Request id : "  + TRANSFORM(REQUEST.GetRequestId()) + " - " 
+	ELSE 
+		lcMessage = ""
+	ENDIF 
+    
+	lcMessage = lcMessage + "Error "+ TRANSFORM(lnError) +" in "+ lcMethod + " at line " + TRANSFORM(lnLine) + " - Last Message() "+  + lcMessage
+	logm(lcMessage)
+
+ENDFUNC
+
+FUNCTION Logm(tcMessage,tcLogFile)
+
+	LOCAL lcMessage,lcLogFile	
+	lcMessage = IIF(VARTYPE(tcMessage)==T_CHARACTER,tcMessage,"Unknow message")
+	lcLogFile = IIF(!EMPTY(tcLogFile),tcLogFile,"error.log")
+    SET TEXTMERGE OFF   && IN case there is a recursive call error within TEXTMERGE 
+    SET TEXTMERGE TO (lcLogFile) ADDITIVE NOSHOW
     SET TEXTMERGE DELIMITERS TO "<<",">>"
     SET TEXTMERGE ON
     _PRETEXT = ''
@@ -38,15 +61,21 @@ FUNCTION ErrorHandler(toCallingObject, tcMessage, tnError, tcMethod, tnLine)
     SET TEXTMERGE TO
     SET TEXTMERGE OFF
 
-ENDFUNC
+ENDFUNC 
 
-	    
 FUNCTION SetError(toCallingObject,tcErrorMsg, tnError)
 	
 	LOCAL lnError,lcErrorMsg
 
     lnError = IIF(VARTYPE(tnError)==T_NUMERIC,tnError,0)
-    lcErrorMsg = IIF(VARTYPE(tcErrorMsg)==T_CHARACTER,tcErrorMsg,"")
+	lcErrorMsg = IIF(VARTYPE(tcErrorMsg)==T_CHARACTER,tcErrorMsg,"Unknow message")
+
+	IF tnError = JS_FATAL_ERROR
+		* Publish the error
+		Logm(lcErrorMsg)
+	ELSE 
+		* Unpublished method to set the error properties of the object only
+	ENDIF 
 	
 	IF VARTYPE(toCallingObject)=T_OBJECT
 		        
@@ -69,18 +98,6 @@ FUNCTION SetError(toCallingObject,tcErrorMsg, tnError)
 	
 ENDFUNC 
 
-FUNCTION log(tcMessage,tcLogFile) 
-	
-	lcLogFile = IIF(!EMPTY(tcLogFile),tcLogFile,"messages.log")
-	lcMessage = IIF(!EMPTY(tcMessage),tcMessage,"Unknow message")
-
-    SET TEXTMERGE TO (lcLogFile) ADDITIVE NOSHOW
-    SET TEXTMERGE DELIMITERS
-    SET TEXTMERGE ON
-    _PRETEXT = ''
-    \<<lcMessage>>
-    SET TEXTMERGE TO
-    SET TEXTMERGE OFF
-
+FUNCTION ResetError(toCallingObject)
+	RETURN SetError(toCallingObject)
 ENDFUNC 
-

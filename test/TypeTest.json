@@ -9,6 +9,6 @@
         "city": "Anytown",
         "zipcode": "12345"
     },
-    "graduationDate": "2023-05-15T00:00:00Z",
+    "graduationDate": "2023-05-15",
     "nullValue": null
 }

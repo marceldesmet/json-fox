@@ -3,23 +3,28 @@ CLEAR
 SET PROCEDURE TO classes\bases\jsbases ADDITIVE
 SET PROCEDURE TO classes\bases\jsmessages ADDITIVE
 
+
+* Run the tests
+Test_jsCustom()
+Test_jsCollection()
+
 * Test procedure for jsCustom class
 PROCEDURE Test_jsCustom
     LOCAL loCustom
     loCustom = CREATEOBJECT("jsCustom")
-set step on
+
     * Simulate an error
-    loCustom.Error(1001, "TestMethod", 10)
+    loCustom.Error(1001, "TestMethod", 10) 
 
     * Check if the error properties are set correctly
-    IF loCustom.lError AND loCustom.nError == 1001 AND loCustom.cErrorMsg == "Message unknow"
+    IF loCustom.lError AND loCustom.nError == 1001  AND loCustom.cErrorMethod == "TestMethod"
         ? "jsCustom Error Handling Test Passed"
     ELSE
         ? "jsCustom Error Handling Test Failed"
     ENDIF
 
     * Test SetError method
-    loCustom.SetError("Custom error message", 2002)
+    SetError(THIS,"Custom error message", 2002)
 
     * Check if the error properties are updated correctly
     IF loCustom.lError AND loCustom.nError == 2002 AND loCustom.cErrorMsg == "Custom error message"
@@ -38,7 +43,7 @@ PROCEDURE Test_jsCollection
     loCollection.Error(3003, "TestMethod", 20)
 
     * Check if the error properties are set correctly
-    IF loCollection.lError AND loCollection.nError == 3003 AND loCollection.cErrorMsg == "Message unknow"
+    IF loCollection.lError AND loCollection.nError == 3003 AND loCollection.cErrorMethod == "TestMethod"
         ? "jsCollection Error Handling Test Passed"
     ELSE
         ? "jsCollection Error Handling Test Failed"
@@ -54,7 +59,3 @@ PROCEDURE Test_jsCollection
         ? "jsCollection SetError Method Test Failed"
     ENDIF
 ENDPROC
-
-* Run the tests
-Test_jsCustom()
-Test_jsCollection()

@@ -1,3 +1,7 @@
+#INCLUDE json-fox.h
+
+* Version 1.1.0.
+
 CLEAR
 * Path is relative to the project root
 SET PROCEDURE TO classes\bases\jsbases ADDITIVE
@@ -12,7 +16,7 @@ Test_jsCollection()
 PROCEDURE Test_jsCustom
     LOCAL loCustom
     loCustom = CREATEOBJECT("jsCustom")
-SET STEP ON 
+
     * Simulate an error
     loCustom.Error(1001, "TestMethod", 10) 
 
@@ -24,7 +28,7 @@ SET STEP ON
     ENDIF
 
     * Test SetError method
-    loCustom.SetError("Custom error message", 2002)
+    SetError(THIS,"Custom error message", 2002)
 
     * Check if the error properties are updated correctly
     IF loCustom.lError AND loCustom.nError == 2002 AND loCustom.cErrorMsg == "Custom error message"
@@ -43,7 +47,7 @@ PROCEDURE Test_jsCollection
     loCollection.Error(3003, "TestMethod", 20)
 
     * Check if the error properties are set correctly
-    IF loCollection.lError AND loCollection.nError == 3003 AND loCollection.cErrorMsg == "TestMethod"
+    IF loCollection.lError AND loCollection.nError == 3003 AND loCollection.cErrorMethod == "TestMethod"
         ? "jsCollection Error Handling Test Passed"
     ELSE
         ? "jsCollection Error Handling Test Failed"

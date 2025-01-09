@@ -1,97 +1,178 @@
 
-
-
-
-
-01/05/2025 01:37:29 PM - Error 1001 in TestMethod at line 10
-Variable '' is not found.
-01/05/2025 01:38:15 PM - Error 1001 in TestMethod at line 10
-Variable 'GOAPP' is not found.
-01/05/2025 01:38:48 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:43:48 PM - Error 1001 in TestMethod at line 10
-Variable '00000001: Incorrect function' is not found.
-01/05/2025 01:43:48 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:43:51 PM - Error 1001 in TestMethod at line 10
-Variable 'GOAPP' is not found.
-01/05/2025 01:43:51 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:44:05 PM - Error 1001 in TestMethod at line 10
-Variable 'CCMD' is not found.
-01/05/2025 01:44:05 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:52:19 PM - Error 1001 in TestMethod at line 10
-Variable 'CCMD' is not found.
-01/05/2025 01:52:19 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:53:34 PM - Error 1001 in TestMethod at line 10
-Variable 'CCMD' is not found.
-01/05/2025 01:54:29 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:54:44 PM - Error 1001 in TestMethod at line 10
-Variable 'GOAPP' is not found.
-01/05/2025 01:55:15 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:55:44 PM - Error 1001 in TestMethod at line 10
-Variable 'GOAPP' is not found.
-01/05/2025 01:56:00 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:56:00 PM - Error 12 in seterror at line 58
-Variable 'LCERRORMSG' is not found.
-01/05/2025 01:57:38 PM - Error 1001 in TestMethod at line 10
-Variable 'GOAPP' is not found.
-01/05/2025 01:57:40 PM - Error 12 in seterror at line 58
-Variable 'LCERRORMSG' is not found.
-01/05/2025 01:57:53 PM - Error 3003 in TestMethod at line 20
-Variable 'GOAPP' is not found.
-01/05/2025 01:57:53 PM - Error 12 in seterror at line 58
-Variable 'LCERRORMSG' is not found.
-01/05/2025 01:58:11 PM - Error 1001 in TestMethod at line 10
-Variable 'GOAPP' is not found.
-01/05/2025 02:00:12 PM - Error 1001 in TestMethod at line 10
-Variable 'CCMD' is not found.
-01/05/2025 02:00:42 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:01:19 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:02:20 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:02:20 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:02:27 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:02:38 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:02:43 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:03:30 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:03:30 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:04:46 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:04:46 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:05:09 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:05:13 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:05:25 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:05:30 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:05:57 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:06:31 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:06:43 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:08:16 PM - Error 3003 in TestMethod at line 20
-Operator/operand type mismatch.
-01/05/2025 02:08:31 PM - Error 1001 in TestMethod at line 10
-Operator/operand type mismatch.
-01/05/2025 02:09:58 PM - Error 1001 in TestMethod at line 10
-Error code is not valid.
-01/05/2025 02:09:58 PM - Error 3003 in TestMethod at line 20
-Error code is not valid.
+01/06/2025 01:19:03 PM - Multi-dimensional arrays are not supported
+01/06/2025 01:19:03 PM - Multi-dimensional arrays are not supported
+01/06/2025 05:03:33 PM - Multi-dimensional arrays are not supported
+01/06/2025 05:03:33 PM - Multi-dimensional arrays are not supported
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADD is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADDPROPERTY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() DESTROY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ERROR is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() GETKEY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() INIT is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ITEM is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1924 in Stringify.stringify() at line 29 - Last Message() PARENT is not an object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READEXPRESSION is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READMETHOD is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() REMOVE is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() RESETTODEFAULT is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() SAVEASCLASS is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEEXPRESSION is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEMETHOD is a method, event, or object.
+01/06/2025 08:55:09 PM - Multi-dimensional arrays are not supported
+01/06/2025 08:55:09 PM - Multi-dimensional arrays are not supported
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADD is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADDPROPERTY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() DESTROY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ERROR is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() GETKEY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() INIT is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ITEM is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1924 in Stringify.stringify() at line 29 - Last Message() PARENT is not an object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READEXPRESSION is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READMETHOD is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() REMOVE is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() RESETTODEFAULT is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() SAVEASCLASS is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEEXPRESSION is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEMETHOD is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADD is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADDPROPERTY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() DESTROY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ERROR is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() GETKEY is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() INIT is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ITEM is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1924 in Stringify.stringify() at line 29 - Last Message() PARENT is not an object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READEXPRESSION is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READMETHOD is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() REMOVE is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() RESETTODEFAULT is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() SAVEASCLASS is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEEXPRESSION is a method, event, or object.
+01/06/2025 08:55:09 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEMETHOD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1734 in Parser.parsejson() at line 43 - Last Message() Property RESETERROR is not found.
+01/07/2025 05:54:42 PM - Error 12 in Parser.parsejson() at line 53 - Last Message() Variable 'UNICODE' is not found.
+01/07/2025 05:54:42 PM - Error 1733 in Parser.parsejson() at line 54 - Last Message() Class definition JSONTRANSLATEUNICODE is not found.
+01/07/2025 05:54:42 PM - Error 1924 in Parser.parsejson() at line 55 - Last Message() LOUNICODEOBJECT is not an object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADDPROPERTY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() DESTROY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ERROR is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() GETKEY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() INIT is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ITEM is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1924 in Stringify.stringify() at line 29 - Last Message() PARENT is not an object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READEXPRESSION is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READMETHOD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() REMOVE is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() RESETTODEFAULT is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() SAVEASCLASS is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEEXPRESSION is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEMETHOD is a method, event, or object.
+01/07/2025 05:54:42 PM - Multi-dimensional arrays are not supported
+01/07/2025 05:54:42 PM - Multi-dimensional arrays are not supported
+01/07/2025 05:54:42 PM - Error 1734 in Parser.parsejson() at line 43 - Last Message() Property RESETERROR is not found.
+01/07/2025 05:54:42 PM - Error 12 in Parser.parsejson() at line 53 - Last Message() Variable 'UNICODE' is not found.
+01/07/2025 05:54:42 PM - Error 1733 in Parser.parsejson() at line 54 - Last Message() Class definition JSONTRANSLATEUNICODE is not found.
+01/07/2025 05:54:42 PM - Error 1924 in Parser.parsejson() at line 55 - Last Message() LOUNICODEOBJECT is not an object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADDPROPERTY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() DESTROY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ERROR is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() GETKEY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() INIT is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ITEM is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1924 in Stringify.stringify() at line 29 - Last Message() PARENT is not an object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READEXPRESSION is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READMETHOD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() REMOVE is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() RESETTODEFAULT is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() SAVEASCLASS is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEEXPRESSION is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEMETHOD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1734 in Parser.parsejson() at line 43 - Last Message() Property RESETERROR is not found.
+01/07/2025 05:54:42 PM - Error 12 in Parser.parsejson() at line 53 - Last Message() Variable 'UNICODE' is not found.
+01/07/2025 05:54:42 PM - Error 1733 in Parser.parsejson() at line 54 - Last Message() Class definition JSONTRANSLATEUNICODE is not found.
+01/07/2025 05:54:42 PM - Error 1924 in Parser.parsejson() at line 55 - Last Message() LOUNICODEOBJECT is not an object.
+01/07/2025 05:54:42 PM - Error 1734 in Parser.parsejson() at line 43 - Last Message() Property RESETERROR is not found.
+01/07/2025 05:54:42 PM - Error 12 in Parser.parsejson() at line 53 - Last Message() Variable 'UNICODE' is not found.
+01/07/2025 05:54:42 PM - Error 1733 in Parser.parsejson() at line 54 - Last Message() Class definition JSONTRANSLATEUNICODE is not found.
+01/07/2025 05:54:42 PM - Error 1924 in Parser.parsejson() at line 55 - Last Message() LOUNICODEOBJECT is not an object.
+01/07/2025 05:54:42 PM - Error 1734 in Parser.parsejson() at line 43 - Last Message() Property RESETERROR is not found.
+01/07/2025 05:54:42 PM - Error 12 in Parser.parsejson() at line 53 - Last Message() Variable 'UNICODE' is not found.
+01/07/2025 05:54:42 PM - Error 1733 in Parser.parsejson() at line 54 - Last Message() Class definition JSONTRANSLATEUNICODE is not found.
+01/07/2025 05:54:42 PM - Error 1924 in Parser.parsejson() at line 55 - Last Message() LOUNICODEOBJECT is not an object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ADDPROPERTY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() DESTROY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ERROR is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() GETKEY is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() INIT is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() ITEM is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1924 in Stringify.stringify() at line 29 - Last Message() PARENT is not an object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READEXPRESSION is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() READMETHOD is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() REMOVE is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() RESETTODEFAULT is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() SAVEASCLASS is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEEXPRESSION is a method, event, or object.
+01/07/2025 05:54:42 PM - Error 1737 in Stringify.stringify() at line 29 - Last Message() WRITEMETHOD is a method, event, or object.
+01/09/2025 08:42:22 AM - Error 1734 in Baseclass.serialize() at line 108 - Last Message() 
+01/09/2025 09:09:25 AM - Error 1737 in Stringify.stringify() at line 45 - Last Message() 
+01/09/2025 09:14:33 AM - Error 1737 in Stringify.stringify() at line 45 - Last Message() 
+01/09/2025 09:18:34 AM - Error 11 in  at line 0 - Last Message() 
+01/09/2025 09:32:02 AM - Multi-dimensional arrays are not supported
+01/09/2025 09:32:02 AM - Multi-dimensional arrays are not supported
+01/09/2025 09:34:13 AM - Multi-dimensional arrays are not supported
+01/09/2025 09:34:13 AM - Multi-dimensional arrays are not supported
+01/09/2025 09:34:36 AM - Multi-dimensional arrays are not supported
+01/09/2025 09:34:36 AM - Multi-dimensional arrays are not supported
+01/09/2025 09:36:36 AM - Multi-dimensional arrays are not supported
+01/09/2025 09:36:36 AM - Multi-dimensional arrays are not supported
+01/09/2025 10:02:45 AM - Multi-dimensional arrays are not supported
+01/09/2025 10:02:45 AM - Multi-dimensional arrays are not supported
+01/09/2025 10:09:39 AM - Multi-dimensional arrays are not supported
+01/09/2025 10:09:39 AM - Multi-dimensional arrays are not supported
+01/09/2025 10:16:57 AM - Error 10 in ERRORHANDLER at line 23 - Last Message() 
+01/09/2025 10:16:58 AM - Error 10 in  at line 0 - Last Message() 
+01/09/2025 10:17:59 AM - Multi-dimensional arrays are not supported
+01/09/2025 10:17:59 AM - Multi-dimensional arrays are not supported
+25/01/09 12:53:49 PM - Multi-dimensional arrays are not supported
+25/01/09 12:53:49 PM - Multi-dimensional arrays are not supported
+25/01/09 12:58:21 PM - Error 1705 in  at line 0 - Last Message() 
+25/01/09 01:03:04 PM - Error 1 in  at line 0 - Last Message() 
+25/01/09 01:05:55 PM - Multi-dimensional arrays are not supported
+25/01/09 01:05:55 PM - Multi-dimensional arrays are not supported
+25/01/09 01:06:08 PM - Multi-dimensional arrays are not supported
+25/01/09 01:06:08 PM - Multi-dimensional arrays are not supported
+25/01/09 01:08:12 PM - Multi-dimensional arrays are not supported
+25/01/09 01:08:12 PM - Multi-dimensional arrays are not supported
+25/01/09 01:12:40 PM - Multi-dimensional arrays are not supported
+25/01/09 01:12:40 PM - Multi-dimensional arrays are not supported
+25/01/09 01:16:05 PM - Error 1923 in JSPARSER_TEST at line 62 - Last Message() 
+25/01/09 01:18:17 PM - Error 1923 in JSPARSER_TEST at line 62 - Last Message() 
+09/01/25 02:59:38 PM - Error 13 in JSSTRINGIFY_TEST at line 101 - Last Message() 
+09/01/25 03:01:38 PM - Expected a '}' at current index 19
+09/01/25 03:01:38 PM - Expected a string property name
+09/01/25 03:01:38 PM - Expected a string property name
+09/01/25 03:16:12 PM - Expected a '}' at current index 19
+09/01/25 03:16:12 PM - Expected a string property name
+09/01/25 03:16:12 PM - Expected a string property name
+09/01/25 03:22:27 PM - Expected a '}' at current index 19
+09/01/25 03:22:27 PM - Expected a string property name
+09/01/25 03:22:27 PM - Expected a string property name
+09/01/25 03:56:58 PM - Expected a '}' at current index 19
+09/01/25 03:56:58 PM - Expected a string property name
+09/01/25 03:56:58 PM - Expected a string property name
+09/01/25 03:57:02 PM - Expected a '}' at current index 19
+09/01/25 03:57:02 PM - Expected a string property name
+09/01/25 03:57:02 PM - Expected a string property name
+09/01/25 04:22:51 PM - Error 11 in Parser.parsedate() at line 300 - Last Message() 
+09/01/25 04:25:46 PM - Error 107 in Stringify.stringify() at line 51 - Last Message() 
+09/01/25 04:45:02 PM - Error 107 in Stringify.stringify() at line 51 - Last Message() 
+09/01/25 04:45:04 PM - Expected a string property name
+09/01/25 04:45:04 PM - Expected a string property name
+09/01/25 04:49:01 PM - Error 107 in Stringify.stringify() at line 51 - Last Message() 
+09/01/25 04:53:55 PM - Error 107 in Stringify.stringify() at line 51 - Last Message() 
+09/01/25 05:13:03 PM - Multi-dimensional arrays are not supported
+09/01/25 05:13:03 PM - Multi-dimensional arrays are not supported

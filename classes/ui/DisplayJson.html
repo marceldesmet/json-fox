@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON Formatter Example</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/json-formatter-js/dist/json-formatter.min.css">
+</head>
+<body>
+    <div id="json-display"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/json-formatter-js/dist/json-formatter.min.js"></script>
+    <script>
+        // Example JSON data
+        const jsonData = {
+            name: "John Doe",
+            email: "john.doe@example.com",
+            address: {
+                street: "123 Main Street",
+                city: "Anytown",
+                zip: "12345"
+            }
+        };
+
+        // Create a JSON formatter instance
+        const formatter = new JSONFormatter(jsonData);
+
+        // Append the formatted JSON to the HTML element
+        document.getElementById('json-display').appendChild(formatter.render());
+    </script>
+</body>
+</html>
