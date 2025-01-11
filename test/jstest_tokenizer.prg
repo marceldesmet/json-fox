@@ -4,6 +4,7 @@ CLEAR
 
 *-* SET COVERAGE TO C:/Webconnectionprojects/WebNode/devtools/json-fox/classes/jsonfox.log
 LOCAL loTokenizer, lcJson, laTokens
+LOCAL loParseObject,loObject
 
 * Create an instance of the Tokenizer class
 loParser = CREATEOBJECT("Parser")
@@ -11,21 +12,29 @@ loTokenizer = CREATEOBJECT("Tokenizer")
 loStringify = CREATEOBJECT("Stringify")
 
 * Load the JSON file
-lcJson =      FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/MyHtmlForm.json")
-lcArrayJson = FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/testarrays.json") 
+lcJson =      FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/MyHtmlForm.json")
+lcArrayJson = FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/Testarrays.json") 
+
 
 * Print to screen the 100 first step of the collection 
 loObject = loTokenizer.tokenize(lcJson)
 
-IF LOWER(loObject.Item(3)) <> "title" .OR. loObject.Count <> 374 
-	? "Tokenize error"
-	dumpTokensToFile(loObject)
+IF LOWER(loObject.Item(3)) <> "title"  .OR. loObject.Count <> 374 
+	? "Tokenize error see file MyHtmlForm.err"
+	loTokenizer.dumpTokensToFile(loObject,"MyHtmlForm.err")
+	RETURN 
+ELSE 
+	? "Ok for " + TRANSFORM(loObject.Count) + " tokens "
+	? "Try to parse to a object now "
 ENDIF 
- 
-loObject = loParser.ParseJson(lcJson)
 
+loParseObject = loParser.ParseJson(lcJson)
+IF VARTYPE(loObject) <> "O" 
+	? "Parse error"
+	? loParser.cErrormsg 
+ENDIF 
 * Save the modified object back to a file
-loStringify.saveToFile("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/UpdatedMyHtmlForm.json", loObject,.T.)
+loStringify.saveToFile("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/UpdatedMyHtmlForm.json", loParseObject,.T.)
  
   
 * Parse the JSON
@@ -58,10 +67,10 @@ IF VARTYPE(loObject)="O"
 	loObject.title = "Updated User Registration"
 
 	* Save the modified object back to a file
-	loStringify.saveToFile("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/UpdatedMyHtmlForm.json", loObject,.T.)
+	loStringify.saveToFile("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/UpdatedMyHtmlForm.json", loObject,.T.)
 
 	* Parse the JSON
-	lcUpdatedJson = FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/UpdatedMyHtmlForm.json")
+	lcUpdatedJson = FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/UpdatedMyHtmlForm.json")
 	loObject = loParser.ParseJson(lcUpdatedJson)
 
 	* Modify the object (example: change the title)
@@ -84,26 +93,5 @@ ELSE
 	? "Error ! - Stringify MyHtmlForm"
 ENDIF 
 
-function dumpTokensToFile(toToken)
-	local lnI, lcToken, lcValue, lnTokenCount, lcOutput
 
-	if vartype(toToken) <> "O" .or. toToken.count = 0
-		return .f.
-	endif
-
-	lcOutput = ""
-
-	for lnI = 1 to toToken.count
-		lcToken = toToken.item(lnI)
-		IF lcToken = ","
-			llNelwLine = .T. 
-		ELSE
-			llNelwLine = .F.
-		ENDIF
-		lcOutput = lcOutput + " - " + transform(lni) + ":" + lcToken  + IIF(llNelwLine,CHR(10),"*") 
-	endfor
-
-	strtofile(lcOutput, "token-content.txt")
-	return .t.
-endfunc
 

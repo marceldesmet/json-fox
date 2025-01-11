@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.1.0.
+* Version 1.2.0.
 
 lparameters tcRole,tvParm1,tvParm2,tvParm3
 
@@ -42,7 +42,7 @@ function App_using_libs()
     
 endfunc
 
-function App_load_components()
+function App_load_components(tcRole)
 
     =App_using_libs()
 
@@ -64,12 +64,16 @@ FUNCTION GetDependencies(tlAddLocalMain)
 	loFiles = CREATEOBJECT("collection")
     
     loFiles.ADD('classes\bases\jsbases.prg')
-	loFiles.ADD('classes\bases\jsmessages.prg')
-    loFiles.ADD('classes\bases\jsarray.prg')
-        
-    loFiles.ADD('classes\json\jsTokenizer.prg')
-    loFiles.ADD('classes\json\jsParser.prg')
-    loFiles.ADD('classes\json\jsStringify.prg')
+	loFiles.ADD('classes\bases\jsbases_messages.prg')
+    loFiles.ADD('classes\bases\jsbases_array.prg')
+    loFiles.ADD('classes\bases\jsbases_factory.prg')
+    
+    loFiles.ADD('classes\json\json_Tokenizer.prg')
+    loFiles.ADD('classes\json\json_Parser.prg')
+    loFiles.ADD('classes\json\json_Stringify.prg')
+    loFiles.ADD('classes\json\json_translateunicode.prg')
+    
+    loFiles.ADD('classes\tools\jstools_distribution.prg')
 
 	* Add for debug purpose local main
 	IF tlAddLocalMain
@@ -95,12 +99,12 @@ ENDFUNC
 
 FUNCTION TestProg(tvParm1,tvParm2,tvParm3)
 
-	do classes\test\jsbases_test.prg 
-	do classes\test\jsmessages_test.prg 
+	do classes\test\jstest_bases.prg 
+	do classes\test\jstest_messages.prg 
 
-	do classes\test\jsTokenizer_test.prg 
-	do classes\test\jsParser_test.prg
-	do classes\test\jsStringify_test.prg
+	do classes\test\jstest_Tokenizer.prg 
+	do classes\test\jstest_Parser.prg
+	do classes\test\jstest_Stringify.prg
 		
 ENDFUNC 
 
@@ -159,22 +163,6 @@ DEFINE CLASS JsonHandler AS jsCustom OLEPUBLIC
         ENDIF
 
         RETURN loObject
-    ENDFUNC
-
-    FUNCTION dumpTokensToFile(tcJson, tcFileName)
-        LOCAL loParser
-
-        loParser = CREATEOBJECT("Parser")
-        loParser.parseJson(tcJson)
-
-        IF loParser.nError = JS_FATAL_ERROR
-            THIS.cErrorMsg = loParser.cErrorMsg
-            THIS.nError = JS_FATAL_ERROR
-            RETURN .F.
-        ENDIF
-
-        loParser.dumpTokensToFile(tcFileName)
-        RETURN .T.
     ENDFUNC
 
 	FUNCTION GetDependencies 

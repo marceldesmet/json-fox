@@ -1,0 +1,5 @@
+{
+    "name": "ExampleScript",
+    "description": "This is an example VFP script stored in JSON with Unicode: \"Hello, 世界!\"",
+    "script": "* Example VFP script\nLOCAL lcMessage\nlcMessage = \"Hello, 世界!\"\n? lcMessage"
+}

@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.1.0.
+* Version 1.2.0.
 
 define class Stringify as jscustom
 	tokens = .null.
@@ -66,19 +66,19 @@ define class Stringify as jscustom
 			case vartype(lcValue) = "C"
 				* We add quotes to format strings data
 				if this.unicode
-					lcJsonValue = '"' + ALLTRIM(this.escapeString(lcValue)) + '"'
+					lcJsonValue = '"' + alltrim(this.escapeString(lcValue)) + '"'
 				else
-					lcJsonValue = '"' + ALLTRIM(lcValue) + '"'
+					lcJsonValue = '"' + alltrim(lcValue) + '"'
 				endif
-			case INLIST(vartype(lcValue),"N","I")
+			case inlist(vartype(lcValue),"N","I")
 				lcJsonValue = transform(lcValue)
 			case vartype(lcValue) == "Q"
-                * Handle VARBINARY values by encoding them in Base64
-                lcJsonValue = '"' + STRCONV(lcValue,13) + '"'
+				* Handle VARBINARY values by encoding them in Base64
+				lcJsonValue = '"' + strconv(lcValue,13) + '"'
 			case vartype(lcValue) == "Y"
-			    * Handle currency values by adding the currency symbol
+				* Handle currency values by adding the currency symbol
 				* We add quotes to format currency data
- 				lcJsonValue = '"' + transform(lcValue) + '"'  
+				lcJsonValue = '"' + transform(lcValue) + '"'
 			case vartype(lcValue) == "D" or vartype(lcValue) == "T"
 				* We add quotes to format date and datetime data
 				lcJsonValue = '"' + this.FormatDateToISO8601(lcValue) + '"'
@@ -89,7 +89,7 @@ define class Stringify as jscustom
 			case vartype(lcValue) = "A"
 				lcJsonValue = this.arrayToString(@lcValue, tlBeautify, tnIndentLevel)
 			otherwise
-				* Can't handle General 
+				* Can't handle General
 				lcJsonValue = "null"
 		endcase
 
@@ -158,15 +158,18 @@ define class Stringify as jscustom
 	endfunc
 
 	function saveToFile(lcFileName, loObject, tlBeautify)
+		IF VARTYPE(loObject) <> T_OBJECT
+			RETURN .F. 
+		endif 
 		local lcJson
 		lcJson = this.stringify(loObject, tlBeautify)
 		strtofile(lcJson, lcFileName)
 	endfunc
 
 	function FormatDateToISO8601(ldDateTime)
-		IF EMPTY(ldDateTime)
-			RETURN "null"
-		ENDIF 
+		if empty(ldDateTime)
+			return "null"
+		endif
 		if vartype(ldDateTime) == "D"
 			return left(dtoc(ldDateTime, 1), 4) + "-" + substr(dtoc(ldDateTime, 1), 5, 2) + "-" + right(dtoc(ldDateTime, 1), 2) + "T00:00:00Z"
 		else
@@ -176,5 +179,5 @@ define class Stringify as jscustom
 		endif
 		return ""
 	endfunc
-   
+
 enddefine

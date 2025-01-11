@@ -1,19 +1,20 @@
 #INCLUDE json-fox.h
-
-* Version 1.1.0.
-
+Do main with "loaddep"
 CLEAR
-* Path is relative to the project root
-SET PROCEDURE TO classes\bases\jsbases ADDITIVE
-SET PROCEDURE TO classes\bases\jsmessages ADDITIVE
+
+* IN debug mode we have a set step on 
+goApp.lDebugMode = .F. 
 
 
 * Run the tests
 Test_jsCustom()
 Test_jsCollection()
 
+
+	
 * Test procedure for jsCustom class
 PROCEDURE Test_jsCustom
+
     LOCAL loCustom
     loCustom = CREATEOBJECT("jsCustom")
 
@@ -28,7 +29,7 @@ PROCEDURE Test_jsCustom
     ENDIF
 
     * Test SetError method
-    SetError(THIS,"Custom error message", 2002)
+    SetError(loCustom,"Custom error message", 2002)
 
     * Check if the error properties are updated correctly
     IF loCustom.lError AND loCustom.nError == 2002 AND loCustom.cErrorMsg == "Custom error message"
@@ -54,7 +55,7 @@ PROCEDURE Test_jsCollection
     ENDIF
 
     * Test SetError method
-    loCollection.SetError("Another custom error message", 4004)
+    SetError(loCollection,"Another custom error message", 4004)
 
     * Check if the error properties are updated correctly
     IF loCollection.lError AND loCollection.nError == 4004 AND loCollection.cErrorMsg == "Another custom error message"

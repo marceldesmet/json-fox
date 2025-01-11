@@ -54,9 +54,9 @@ IF loDeserializedObject.name == "John Doe" AND ;
    loDeserializedObject.email == "john.doe@example.com" AND ;
    loDeserializedObject.object_context == "http://schema.org" AND ;
    loDeserializedObject.object_type == "Person"
-    ? "Test passed: The deserialized object matches the original object."
+    ? "The deserialized object matches the original object. Test ok ! "
 ELSE
-    ? "Test failed: The deserialized object does not match the original object."
+    ? "The deserialized object does not match the original object. Test failed ! "
 ENDIF
 
 * Try with a cursor 
@@ -138,7 +138,7 @@ IF loParsedObject.cString == "Sample String" AND ;
    loParsedObject.dDouble == 123.45 AND ;
    loParsedObject.qVarbinary == "Sample Varbinary" AND ;
    loParsedObject.vVarchar == "Sample Varchar"
-    ? "Test passed: The deserialized object matches the original object."
+    ? "The deserialized object matches the original object. Test passed ! "
 ELSE
-    ? "Test failed: The deserialized object does not match the original object."
+    ? "The deserialized object does not match the original object. Test failed ! "
 ENDIF

@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.1.0.
+* Version 1.2.0.
 
 * This component breaks the input JSON string into tokens.
 * Each token represents a meaningful string element
@@ -53,9 +53,9 @@ define class Tokenizer as jscustom
 					if this.isMultiDimArray(lcCurrentChar, tcInput, @i)
 						* Multi-dimensional array not supported yet
 						* #TODO Implement support for multi-dimensional arrays
-						SetError(THIS,"Multi-dimensional arrays are not supported",JS_FATAL_ERROR)
-						EXIT
-					endif 
+						SetError(this,"Multi-dimensional arrays are not supported",JS_FATAL_ERROR)
+						exit
+					endif
 					this.tokens.add(JS_LBRACKET)
 				case lcCurrentChar == ']'
 					this.tokens.add(JS_RBRACKET)
@@ -93,12 +93,12 @@ define class Tokenizer as jscustom
 			i = i + 1
 		enddo
 
-		IF THIS.lError
-			RETURN .NULL.
-		ELSE 
+		if this.lError
+			return .null.
+		else
 			return this.tokens
-		ENDIF
-		
+		endif
+
 	endfunc
 
 	* There are only " values without quotes in JSON
@@ -170,33 +170,33 @@ define class Tokenizer as jscustom
 	endfunc
 
 	* Check if the current character is part of a multi-dimensional array
-    FUNCTION isMultiDimArray(char, tcInput, rnI)
-		LOCAL lnBracketCount, lcCurrentChar, lnI
-        IF char == '['
+	function isMultiDimArray(char, tcInput, rnI)
+		local lnBracketCount, lcCurrentChar, lnI
+		if char == '['
 			lnBracketCount = 1
 			lnI = rnI + 1
-		ELSE
-			RETURN .F.
-		ENDIF 
-		DO WHILE lnI <= LEN(tcInput)
-            lcCurrentChar = SUBSTR(tcInput, lnI, 1)
-            IF lcCurrentChar == '['
-                lnBracketCount = lnBracketCount + 1
-            ELSE
-				DO CASE 
-					CASE lcCurrentChar == ']'
-						lnBracketCount = lnBracketCount - 1	
-						EXIT				
-					CASE EMPTY(lcCurrentChar)
+		else
+			return .f.
+		endif
+		do while lnI <= len(tcInput)
+			lcCurrentChar = substr(tcInput, lnI, 1)
+			if lcCurrentChar == '['
+				lnBracketCount = lnBracketCount + 1
+			else
+				do case
+					case lcCurrentChar == ']'
+						lnBracketCount = lnBracketCount - 1
+						exit
+					case empty(lcCurrentChar)
 						* Continue with next character
-					OTHERWISE
-					    EXIT
-				ENDCASE
-            ENDIF
-            lnI = lnI + 1
-        ENDDO
-        RETURN lnBracketCount > 1
-    ENDFUNC
+					otherwise
+						exit
+				endcase
+			endif
+			lnI = lnI + 1
+		enddo
+		return lnBracketCount > 1
+	endfunc
 
 enddefine
 

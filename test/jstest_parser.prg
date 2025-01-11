@@ -6,7 +6,7 @@ loParser = CREATEOBJECT("Parser")
 loStringify = CREATEOBJECT("Stringify")
 
 * Parse the JSON
-lcTypeJson =  FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/TypeTest.json") 
+lcTypeJson =  FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/TypeTest.json") 
 
 loTypeObject = loParser.ParseJson(lcTypeJson)
 * Modify the object (example: change the title)

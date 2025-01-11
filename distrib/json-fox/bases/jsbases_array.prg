@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.1.0.
+* Version 1.2.0.
 Define Class jsArray As jsCustom
 	Dimension aArray[1]
 	nRow = 0

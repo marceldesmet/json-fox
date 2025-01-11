@@ -70,7 +70,7 @@ FUNCTION SetError(toCallingObject,tcErrorMsg, tnError)
     lnError = IIF(VARTYPE(tnError)==T_NUMERIC,tnError,0)
 	lcErrorMsg = IIF(VARTYPE(tcErrorMsg)==T_CHARACTER,tcErrorMsg,"Unknow message")
 
-	IF tnError = JS_FATAL_ERROR
+	IF lnError = JS_FATAL_ERROR
 		* Publish the error
 		Logm(lcErrorMsg)
 	ELSE 

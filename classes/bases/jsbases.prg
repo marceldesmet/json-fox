@@ -1,94 +1,59 @@
 #INCLUDE json-fox.h
 
-* Version 1.1.0.
+* Version 1.2.0.
 
-* The baseCustom class is a custom class in Visual FoxPro designed to handle error management and reporting. 
+* The baseCustom class is a custom class in Visual FoxPro designed to handle error management and reporting.
 * It includes properties and methods to manage errors that occur within the class or its subclasses.
-DEFINE CLASS jsCustom AS CUSTOM 			    && relation is a lightware object for custom building but we need custom for 
+define class jsCustom as custom 			    && relation is a lightware object for custom building but we need custom for
 
-	name = "Baseclass"
-		
+	name = "jsCustom"
+
 	* Common error handling routine ->
-	
-	* These properties and methods are to add to all non child of this classes 
-    * Properties for error handling
-    lSendError = .T.                            && Flag to determine if errors should be sent
-    oSendError = .NULL. 
-    nError = 0                                  && Numeric code of the last error
- 
-    lError = .F.                                && Flag to indicate if an error has occurred
-    cErrorMsg = "Message unknow"                && Stores the last error message
-    cErrorMethod = ""
- 
-    * Error handling procedure
-	PROCEDURE Error(nError, cMethod, nLine)
-        ErrorHandler(THIS,MESSAGE(),nError, cMethod, nLine)
-    ENDPROC
 
-	* End of <- Common error handling routine 
+	* These properties and methods are to add to all non child of this classes
+	* Properties for error handling
+	lSendError = .t.                            && Flag to determine if errors should be sent
+	oSendError = .null.
+	nError = 0                                  && Numeric code of the last error
 
-ENDDEFINE
+	lError = .f.                                && Flag to indicate if an error has occurred
+	cErrorMsg = "Message unknow"                && Stores the last error message
+	cErrorMethod = ""
 
-* The baseCollection class is a collection class in Visual FoxPro designed to handle error management and reporting. 
+	* Error handling procedure
+	procedure error(nError, cMethod, nLine)
+		ErrorHandler(this,message(),nError, cMethod, nLine)
+	endproc
+
+	* End of <- Common error handling routine
+
+enddefine
+
+* The baseCollection class is a collection class in Visual FoxPro designed to handle error management and reporting.
 * It includes properties and methods to manage errors that occur within the class or its subclasses.
-DEFINE CLASS jsCollection AS Collection 
- 
- 	name = "Basecollection" 
- 	
- 	* Common error handling routine ->
-	
-	* These properties and methods are to add to all non child of this classes 
-    * Properties for error handling
-    lSendError = .T.                            && Flag to determine if errors should be sent
-    oSendError = .NULL. 
+define class jsCollection as collection
 
-    nError = 0                                  && Numeric code of the last error
-    lError = .F.                                && Flag to indicate if an error has occurred
-    cErrorMsg = "Message unknow"                && Stores the last error message
+	name = "jsCollection"
+
+	* Common error handling routine ->
+
+	* These properties and methods are to add to all non child of this classes
+	* Properties for error handling
+	lSendError = .t.                            && Flag to determine if errors should be sent
+	oSendError = .null.
+
+	nError = 0                                  && Numeric code of the last error
+	lError = .f.                                && Flag to indicate if an error has occurred
+	cErrorMsg = "Message unknow"                && Stores the last error message
 	cErrorMethod = ""
-     
-    * Error handling procedure
-	PROCEDURE Error(nError, cMethod, nLine)
-        ErrorHandler(THIS,MESSAGE(),nError, cMethod, nLine)
-    ENDPROC
 
-    * End of <- Common error handling routine 
+	* Error handling procedure
+	procedure error(nError, cMethod, nLine)
+		ErrorHandler(this,message(),nError, cMethod, nLine)
+	endproc
 
-ENDDEFINE
+	* End of <- Common error handling routine
 
-DEFINE CLASS jsform AS form 
+enddefine
 
-  	* Common error handling routine ->
-	
-	* These properties and methods are to add to all non child of this classes 
-    * Properties for error handling
-    lSendError = .T.                            && Flag to determine if errors should be sent
-    oSendError = .NULL. 
 
-    nError = 0                                  && Numeric code of the last error
-    lError = .F.                                && Flag to indicate if an error has occurred
-    cErrorMsg = "Message unknow"                && Stores the last error message
-	cErrorMethod = ""
-   
-    ColorSource = 5 
-    zoombox = .T. 
-    borderstyle = 3 
-    showwindows = 2               && As top level form
-    viewformat =  1.618           &&  16:9 = 1.78 , 1:1 = 1 , Nombre d'or = 1.618
-    minWith = 612
-    viewsize = 1
-
-    FUNCTION Init 
-        * Set form size to viewformat 
-        THIS.Width = THIS.MinWidth
-        * Set form size to viewformat
-        THIS.MinHeight = INT(THIS.MinWidth / THIS.ViewFormat)
-    ENDFUNC 
-
-    * Error handling procedure
-	PROCEDURE Error(nError, cMethod, nLine)
-        ErrorHandler(THIS,MESSAGE(),nError, cMethod, nLine)
-    ENDPROC
-
-  
-ENDDEFINE 

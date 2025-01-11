@@ -8,64 +8,64 @@ define class Parser as jscustom
 	currentIndex = 0
 	nArrayLevel = 0 		&& Track the array level for error checking
 	name = "Parser"
-	Unicode  = .F. 			&& Set to .T. to decode Unicode escape sequences in the parsed object
-	IsJsonLdObject = .F.    && Handle JSON-LD objects with @context and @type properties
+	unicode  = .f. 			&& Set to .T. to decode Unicode escape sequences in the parsed object
+	IsJsonLdObject = .f.    && Handle JSON-LD objects with @context and @type properties
 	rdFoxprofix = "object_"	&& Prefix Json object for FoxPro object properties with "rd_"
-	HandleComments = .F. 	&& Set to .T. to remove comments from the JSON string
-	
+	HandleComments = .f. 	&& Set to .T. to remove comments from the JSON string
+
 	function parseJson(tcInput)
 
 		local loTokenizer, loObject, loUnicodeObject
 
 		if vartype(tcInput)<> T_CHARACTER .or. empty(tcInput)
-			SetError(THIS,"Wrong input string",JS_FATAL_ERROR)
+			SetError(this,"Wrong input string",JS_FATAL_ERROR)
 			return .null.
 		endif
 
-		IF THIS.HandleComments = .T. 
+		if this.HandleComments = .t.
 			* Remove comments
 			tcInput = this.removeComments(tcInput)
-		ENDIF
+		endif
 
-		lcDateSet = set('Date')
-		set date ymd
+		* lcDateSet = set('Date')
+		* set date ymd
 
 		* Clear some special characters
 		tcInput = chrtran(tcInput, chr(9),'')			&& Tab
 		tcInput = chrtran(tcInput, chr(10),'')			&& Linefeed
 		tcInput = chrtran(tcInput, chr(13),'')			&& Carriage return
 		* We don't remove space because they are part of the JSON string
-		
+
 
 		loTokenizer = createobject("Tokenizer")
 		this.tokens = loTokenizer.tokenize(tcInput)
 
 		if loTokenizer.nError = JS_FATAL_ERROR .or. vartype(this.tokens) <> T_OBJECT
-			SetError(THIS,loTokenizer.cerrormsg,JS_FATAL_ERROR)
+			SetError(this,loTokenizer.cerrormsg,JS_FATAL_ERROR)
 			return .null.
 		endif
 
 		* Setup for parsing
 		this.currentIndex = 1
 		* this.nArrayLevel = 0    #TODO Implement support for multi-dimensional arrays
-		ResetError(THIS)
+		ResetError(this)
 
 		loObject = this.parseObject()
 
 		* Reset to previous VFP settings
-		set date &lcDateSet
+		* set date &lcDateSet
 
 		if this.nError = JS_FATAL_ERROR
-			SetError(THIS,this.cerrormsg,JS_FATAL_ERROR)
+			SetError(this,this.cerrormsg,JS_FATAL_ERROR)
 			return .null.
 		endif
 
 		* Decode Unicode escape sequences in the parsed object
-		IF THIS.Unicode = .T. 
+		if this.unicode = .t.
 			loUnicodeObject = createobject("JsonTranslateUnicode")
 			loObject = loUnicodeObject.DecodeUnicodeInObject(loObject)
-		endif 
-		
+		endif
+
 		return loObject
 
 	endfunc
@@ -79,8 +79,8 @@ define class Parser as jscustom
 
 		* '{' token begins a object
 		if lcToken != JS_LBRACE
-			SetError(THIS,"Expected a '{' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
-			RETURN .NULL.
+			SetError(this,"Expected a '{' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+			return .null.
 		endif
 
 		* Create an empty object
@@ -90,7 +90,7 @@ define class Parser as jscustom
 		if this.tokens.item(this.currentIndex+1) == JS_RBRACE
 			this.currentIndex = this.currentIndex + 2  && Skip '{' and '}'
 			return loObject
-		endif 
+		endif
 
 		this.currentIndex = this.currentIndex + 1  && Skip '{'
 
@@ -98,7 +98,7 @@ define class Parser as jscustom
 			* Next token is a string property name
 			lcType = this.tokens.item(this.currentIndex)
 			if lcType != JS_STRING
-				SetError(THIS,"Expected a string property name",JS_FATAL_ERROR)
+				SetError(this,"Expected a string property name",JS_FATAL_ERROR)
 				exit
 			else
 				this.currentIndex = this.currentIndex + 1  		&& Skip type token set for properties and values
@@ -108,7 +108,7 @@ define class Parser as jscustom
 			if this.tokens.item(this.currentIndex) == JS_COLON
 				this.currentIndex = this.currentIndex + 1  		 && Skip ':'
 			else
-				SetError(THIS,"Expected a colon ':' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+				SetError(this,"Expected a colon ':' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
 				exit
 			endif
 
@@ -142,7 +142,7 @@ define class Parser as jscustom
 						case lcValuetype == JS_STRING
 							lvValue = this.tokens.item(this.currentIndex)
 						otherwise
-							SetError(THIS,"Expected a valuetype not " + lcValuetype ,JS_FATAL_ERROR)
+							SetError(this,"Expected a valuetype not " + lcValuetype ,JS_FATAL_ERROR)
 							exit
 					endcase
 					* Skip the value token
@@ -151,11 +151,11 @@ define class Parser as jscustom
 			endcase
 
 			* Add the property and value to the object
-			IF THIS.IsJsonLdObject
-				THIS.HandleJsonLDobject(@loObject, lcProperty, lvValue)
-			ELSE 
+			if this.IsJsonLdObject
+				this.HandleJsonLDobject(@loObject, lcProperty, lvValue)
+			else
 				addproperty(loObject, lcProperty, lvValue)
-			ENDIF
+			endif
 
 			lcToken = this.tokens.item(this.currentIndex)
 
@@ -163,14 +163,14 @@ define class Parser as jscustom
 				this.currentIndex = this.currentIndex + 1
 			else
 				* Here we have reached the end of the object
-				IF lctoken != JS_RBRACE
-					SetError(THIS,"Expected a '}' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
-				ENDIF
+				if lctoken != JS_RBRACE
+					SetError(this,"Expected a '}' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+				endif
 			endif
 
 		enddo
 
-		this.currentIndex = this.currentIndex + 1  	&& Skip '}'	
+		this.currentIndex = this.currentIndex + 1  	&& Skip '}'
 
 		return loObject
 
@@ -187,8 +187,8 @@ define class Parser as jscustom
 		lcToken = this.tokens.item(this.currentIndex)
 
 		if lcToken != JS_LBRACKET
-			SetError(THIS,"Expected a '[' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
-			RETURN .NULL.
+			SetError(this,"Expected a '[' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+			return .null.
 		endif
 
 		* Create an empty array object
@@ -199,7 +199,7 @@ define class Parser as jscustom
 			this.currentIndex = this.currentIndex + 2  && Skip '[' and ']'
 			return loArray
 		endif
-		
+
 		* Ok skip '[' we have a array with values
 		this.currentIndex = this.currentIndex + 1  && Skip '['
 
@@ -237,14 +237,14 @@ define class Parser as jscustom
 			endcase
 
 			loArray.add(lvValue)
-			
+
 			* Skip comma
 			if this.tokens.item(this.currentIndex) == JS_COMMA
 				this.currentIndex = this.currentIndex + 1
 			else
 				* Here we have reached the end of the array
 				if this.tokens.item(this.currentIndex) != JS_RBRACKET
-					SetError(THIS,"Expected a ']' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+					SetError(this,"Expected a ']' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
 				endif
 			endif
 
@@ -258,9 +258,9 @@ define class Parser as jscustom
 	function parseDate(lcDateString)
 		local lnYear, lnMonth, lnDay, lnHour, lnMinute, lnSecond, lcDatePart, lcTimePart, lcTimeZonePart
 
-		IF LOWER(lcDateString) = "null"
-			RETURN {}
-		ENDIF 
+		if lower(lcDateString) = "null"
+			return {}
+		endif
 
 		* Initialize default values
 		lnYear = 0
@@ -309,7 +309,7 @@ define class Parser as jscustom
 		lcOutput = ""
 		lnPos = 1
 		lnLength = len(tcInput)
-		lbInString = .F.
+		lbInString = .f.
 
 		do while lnPos <= lnLength
 			lcChar = substr(tcInput, lnPos, 1)
@@ -350,13 +350,26 @@ define class Parser as jscustom
 
 	* Handle JSON-LD objects with @context and @type @id properties
 	function HandleJsonLDobject(roObject, tcProperty, tvValue)
-		IF LEFT(tcProperty, 1) == "@"
+		if left(tcProperty, 1) == "@"
 			* Handle JSON-LD keywords by storing them in a special property
-			lcProperty = this.rdFoxprofix + SUBSTR(tcProperty,2)
-		ELSE
+			lcProperty = this.rdFoxprofix + substr(tcProperty,2)
+		else
 			lcProperty = tcProperty
-		ENDIF
-		addproperty(roObject, lcProperty, tvValue)			
-	endfunc 
+		endif
+		addproperty(roObject, lcProperty, tvValue)
+	endfunc
+
+	function isbinary(tcValue)
+		* Check if the value contains non-printable characters
+		local lnIndex, lnLength, lcChar
+		lnLength = len(tcValue)
+		for lnIndex = 1 to lnLength
+			lcChar = substr(tcValue, lnIndex, 1)
+			if asc(lcChar) < 32 or asc(lcChar) > 126
+				return .t.
+			endif
+		endfor
+		return .f.
+	endfunc
 
 enddefine

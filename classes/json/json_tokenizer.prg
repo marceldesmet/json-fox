@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.1.0.
+* Version 1.2.0.
 
 * This component breaks the input JSON string into tokens.
 * Each token represents a meaningful string element
@@ -36,6 +36,7 @@ define class Tokenizer as jscustom
 
 		do while i <= len(tcInput)
 			lcCurrentChar = substr(tcInput, i, 1)
+
 			do case
 				case empty(lcCurrentChar)
 					* Skip whitespace
@@ -53,9 +54,9 @@ define class Tokenizer as jscustom
 					if this.isMultiDimArray(lcCurrentChar, tcInput, @i)
 						* Multi-dimensional array not supported yet
 						* #TODO Implement support for multi-dimensional arrays
-						SetError(THIS,"Multi-dimensional arrays are not supported",JS_FATAL_ERROR)
-						EXIT
-					endif 
+						SetError(this,"Multi-dimensional arrays are not supported",JS_FATAL_ERROR)
+						exit
+					endif
 					this.tokens.add(JS_LBRACKET)
 				case lcCurrentChar == ']'
 					this.tokens.add(JS_RBRACKET)
@@ -63,20 +64,10 @@ define class Tokenizer as jscustom
 					this.tokens.add(JS_COLON)
 				case lcCurrentChar == ','
 					this.tokens.add(JS_COMMA)
+				case lcCurrentChar == '\'
+					* Handle comments ?
 				case lcCurrentChar == '"'
-					lcValue = ""
-					if this.isDate(lcCurrentChar, tcInput, @i, @lcValue)
-						this.tokens.add(JS_DATE)
-					else
-						this.tokens.add(JS_STRING)
-					endif
-					i = i + 1
-					lcCurrentChar = substr(tcInput, i, 1)
-					do while lcCurrentChar != '"' and i <= len(tcInput)
-						lcValue = lcValue + lcCurrentChar
-						i = i + 1
-						lcCurrentChar = substr(tcInput, i, 1)
-					enddo
+					this.isString(lcCurrentchar, tcInput, @i, @lcValue) 
 					this.tokens.add(lcValue)
 				case this.isBoolean(lcCurrentChar, tcInput, @i, @lcValue)
 					this.tokens.add(JS_BOOLEAN)
@@ -93,17 +84,55 @@ define class Tokenizer as jscustom
 			i = i + 1
 		enddo
 
-		IF THIS.lError
-			RETURN .NULL.
-		ELSE 
+		if this.lError
+			return .null.
+		else
 			return this.tokens
-		ENDIF
-		
+		endif
+
 	endfunc
 
 	* There are only " values without quotes in JSON
 	* Boolean, Numeric and Null values are not enclosed in quotes
 	* So we need to check if the current character is part of a boolean, numeric or null value
+	function isString(char, tcInput, rnI, rcValue)
+		rcValue = ""
+		if this.isDate(char, tcInput, @rni)
+			this.tokens.add(JS_DATE)
+		else
+			this.tokens.add(JS_STRING)
+		endif
+		rni = rni + 1
+		lcCurrentChar = substr(tcInput, rni, 1)
+		do while lcCurrentChar != '"' and rni <= len(tcInput)
+			if lcCurrentChar == '\'
+				* Handle escape character
+				rni = rni + 1
+				* Can use lcCurrentChar because next token could be equal to "
+				* and end the do while ...
+				lcInCurrentChar = substr(tcInput, rni, 1)
+				do case
+					case lcInCurrentChar == "n"
+						rcValue = rcValue + CHR(10)
+					case lcInCurrentChar == "t"
+						rcValue = rcValue + CHR(9)
+					case lcInCurrentChar == "r"
+						rcValue = rcValue + CHR(13)
+					case lcInCurrentChar == "b"
+						rcValue = rcValue + CHR(8)
+					case lcInCurrentChar == "f"
+						rcValue = rcValue + CHR(10)
+					otherwise
+						rcValue = rcValue + lcInCurrentChar
+				endcase
+			else
+				rcValue = rcValue + lcCurrentChar
+			endif
+			rni = rni + 1
+			lcCurrentChar = substr(tcInput, rni, 1)
+    	enddo
+	
+	endfunc 
 
 	function isBoolean(char, tcInput, rnI, rcValue)
 		do case
@@ -161,7 +190,7 @@ define class Tokenizer as jscustom
 		endif
 	endfunc
 
-	function isDate(char, tcInput, rnI, rcValue)
+	function isDate(char, tcInput, rnI)
 		if isdigit(substr(tcInput, rnI+1, 1)) .and. substr(tcInput, rnI+5, 1)="-"
 			return .t.
 		else
@@ -170,33 +199,63 @@ define class Tokenizer as jscustom
 	endfunc
 
 	* Check if the current character is part of a multi-dimensional array
-    FUNCTION isMultiDimArray(char, tcInput, rnI)
-		LOCAL lnBracketCount, lcCurrentChar, lnI
-        IF char == '['
+	function isMultiDimArray(char, tcInput, rnI)
+		local lnBracketCount, lcCurrentChar, lnI
+		if char == '['
 			lnBracketCount = 1
 			lnI = rnI + 1
-		ELSE
-			RETURN .F.
-		ENDIF 
-		DO WHILE lnI <= LEN(tcInput)
-            lcCurrentChar = SUBSTR(tcInput, lnI, 1)
-            IF lcCurrentChar == '['
-                lnBracketCount = lnBracketCount + 1
-            ELSE
-				DO CASE 
-					CASE lcCurrentChar == ']'
-						lnBracketCount = lnBracketCount - 1	
-						EXIT				
-					CASE EMPTY(lcCurrentChar)
+		else
+			return .f.
+		endif
+		do while lnI <= len(tcInput)
+			lcCurrentChar = substr(tcInput, lnI, 1)
+			if lcCurrentChar == '['
+				lnBracketCount = lnBracketCount + 1
+			else
+				do case
+					case lcCurrentChar == ']'
+						lnBracketCount = lnBracketCount - 1
+						exit
+					case empty(lcCurrentChar)
 						* Continue with next character
-					OTHERWISE
-					    EXIT
-				ENDCASE
-            ENDIF
-            lnI = lnI + 1
-        ENDDO
-        RETURN lnBracketCount > 1
-    ENDFUNC
+					otherwise
+						exit
+				endcase
+			endif
+			lnI = lnI + 1
+		enddo
+		return lnBracketCount > 1
+	endfunc
 
+	function dumpTokensToFile(toTokens,tcDumpFile)
+		local lnI, lcToken, lcValue, lnTokenCount, lcOutput
+
+		lcOutput = ""
+				
+		if vartype(toTokens) <> "O" .or. toTokens.count = 0
+			if vartype(THIS.oTokens) <> "O" .or. THIS.oTokens.count = 0
+				lcOutput = "Empty tokens, tokens.count = 0 "
+			else
+				toTokens = THIS.oTokens
+			endif
+		endif
+
+		for lnI = 1 to toTokens.count
+			lcToken = toTokens.item(lnI)
+			if lcToken = ","
+				llNelwLine = .t.
+			else
+				llNelwLine = .f.
+			endif
+			lcOutput = lcOutput + " - " + transform(lni) + ":" + lcToken  + iif(llNelwLine,chr(10),"*")
+		endfor
+		if vartype(tcDumpFile) = T_CHARACTER
+			strtofile(lcOutput, tcDumpfile)
+		else
+			strtofile(lcOutput, "token-content.txt")
+		endif
+		return .t.
+	ENDFUNC
+	
 enddefine
 
