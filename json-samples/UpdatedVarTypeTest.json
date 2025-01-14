@@ -1,0 +1,17 @@
+{
+    "address":{
+        "city":"Anytown",
+        "street":"123 Main St",
+        "zipcode":"12345"
+    },
+    "age":30,
+    "courses":[
+        "Math",
+        "Science",
+        "History"],
+    "graduationdate":"2023-05-15",
+    "isstudent":false,
+    "name":"John Doe",
+    "nullvalue":null,
+    "weight":80.50
+}

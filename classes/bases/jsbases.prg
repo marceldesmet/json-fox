@@ -1,12 +1,12 @@
 #INCLUDE json-fox.h
 
-* Version 1.2.0.
+* Version 1.3.0.
 
 * The baseCustom class is a custom class in Visual FoxPro designed to handle error management and reporting.
 * It includes properties and methods to manage errors that occur within the class or its subclasses.
 define class jsCustom as custom 			    && relation is a lightware object for custom building but we need custom for
 
-	name = "jsCustom"
+	cName = "jsCustom"
 
 	* Common error handling routine ->
 
@@ -33,7 +33,7 @@ enddefine
 * It includes properties and methods to manage errors that occur within the class or its subclasses.
 define class jsCollection as collection
 
-	name = "jsCollection"
+	cName = "jsCollection"
 
 	* Common error handling routine ->
 
@@ -55,5 +55,8 @@ define class jsCollection as collection
 	* End of <- Common error handling routine
 
 enddefine
+
+
+
 
 

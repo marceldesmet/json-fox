@@ -57,7 +57,7 @@ ENDIF
 loObject = loParser.ParseJson(lcJson)
 
 IF VARTYPE(loObject)="O"
-	IF loObject.Fields.Count <> 8
+	IF ALEN(loObject.Fields.Item,1) <> 8
 		? "Error ! - Parser return ok but fields count is not " 
 	ELSE 
 		? "Fields count ok!" 

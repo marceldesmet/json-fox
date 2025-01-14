@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.2.0.
+* Version 1.3.0.
 
 * This component breaks the input JSON string into tokens.
 * Each token represents a meaningful string element
@@ -50,12 +50,12 @@ define class Tokenizer as jscustom
 				case lcCurrentChar == '}'
 					this.tokens.add(JS_RBRACE)
 				case lcCurrentChar == '['
-					if this.isMultiDimArray(lcCurrentChar, tcInput, @i)
-						* Multi-dimensional array not supported yet
-						* #TODO Implement support for multi-dimensional arrays
-						SetError(this,"Multi-dimensional arrays are not supported",JS_FATAL_ERROR)
-						exit
-					endif
+					*if this.isMultiDimArray(lcCurrentChar, tcInput, @i)
+					*	* Multi-dimensional array not supported yet
+					*	* #TODO Implement support for multi-dimensional arrays
+					*	SetError(this,"Multi-dimensional arrays are not supported",JS_FATAL_ERROR)
+					*	exit
+					*endif
 					this.tokens.add(JS_LBRACKET)
 				case lcCurrentChar == ']'
 					this.tokens.add(JS_RBRACKET)

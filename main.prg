@@ -1,174 +1,185 @@
 #INCLUDE json-fox.h
 
-* Version 1.2.0.
+* Version 1.0.0.
 
 lparameters tcRole,tvParm1,tvParm2,tvParm3
 
-tcRole = IIF(VARTYPE(tcRole)="C",tcRole,"main")
+tcRole = iif(vartype(tcRole)="C",tcRole,"main")
 
-=App_load_components(tcRole)
+if application.startmode = 4
+	_screen.visible = .f.
+endif
 
-DO CASE 
-	CASE LOWER(tcRole) = "test" 
-		* Load libs is done in test procedure 
-		* to indentify using of each prg 
-		RETURN TestProg(tvParm1,tvParm2,tvParm3)
-	CASE LOWER(tcRole) = "distrib"
-		* Copy to the distrib repertory when new release 
-		RETURN DistribProg()
-	CASE LOWER(tcRole) = "loaddep"
+public json,dep
+
+* Load
+dep = createobject("dependencies")
+json = createobject("JsonHandler")
+* Start here desktop or server
+json.Initialize_MVC()
+
+do case
+	case lower(tcRole) = "test"
+		* Load libs is done in test procedure
+		* to indentify using of each prg
+		return TestProg(tvParm1,tvParm2,tvParm3)
+	case lower(tcRole) = "distrib"
+		* Copy to the distrib repertory when new release
+		return dep.CopytoDistribute()
+	case lower(tcRole) = "debug"
 		* Used for debuging
-		ON ERROR DO ErrorHandler WITH ;
-		   .NULL., MESSAGE( ), ERROR(), PROGRAM( ), LINENO( ) 
-	CASE LOWER(tcRole) = "main" 
+		if vartype(goApp) <> "O"
+			public goApp
+			goApp = createobject("empty")
+		endif
+		addproperty(goApp,'ldebugmode',.t.)
+		on error do ErrorHandler with ;
+			.null., message( ), error(), program( ), lineno( )
+	case lower(tcRole) = "main"
 		* load libs only
-		RETURN 
-	OTHERWISE  
-        RETURN CommonProg(tcRole,tvParm1,tvParm2,tvParm3)
-ENDCASE 
+		return
+	otherwise
+		return
+endcase
 
-function App_using_libs()
+************* Start your application here
+*-* Here we have specific project interface creation
+define class JsonHandler as jsApplication olepublic
 
-    * Load all root dependencies
-    =load_librarys()
-
-    * Current project dependencies 
-    LOCAL loDependencies, lnI, lcFile
-    loDependencies = GetDependencies(.T.)
-    FOR lnI = 1 TO loDependencies.Count
-        lcFile = loDependencies.Item(lnI)
-        set procedure to (lcFile) additive
-    ENDFOR
-    
-endfunc
-
-function App_load_components(tcRole)
-
-    =App_using_libs()
-
-	public goApp
-	goApp = createobject("empty")
-	addproperty(goApp,"ldebugmode",.T.)
-		
-ENDFUNC
-
-FUNCTION load_librarys 
-
-	* DO json-fox\dependencies.prg 
-
-ENDFUNC 
-
-FUNCTION GetDependencies(tlAddLocalMain)
-	
-	
-	loFiles = CREATEOBJECT("collection")
-    
-    loFiles.ADD('classes\bases\jsbases.prg')
-	loFiles.ADD('classes\bases\jsbases_messages.prg')
-    loFiles.ADD('classes\bases\jsbases_array.prg')
-    loFiles.ADD('classes\bases\jsbases_factory.prg')
-    
-    loFiles.ADD('classes\json\json_Tokenizer.prg')
-    loFiles.ADD('classes\json\json_Parser.prg')
-    loFiles.ADD('classes\json\json_Stringify.prg')
-    loFiles.ADD('classes\json\json_translateunicode.prg')
-    
-    loFiles.ADD('classes\tools\jstools_distribution.prg')
-
-	* Add for debug purpose local main
-	IF tlAddLocalMain
-	    loFiles.ADD('main.prg')
-   	ENDIF 
-   	
-	RETURN loFiles 
-
-endfunc 
-
-
-FUNCTION DistribProg()
-
-        LOCAL loFiles, loDistribution,lcSourcepath,lcDestpath
-        lcSourcepath = "classes"
-        lcDestpath = "distrib"
-        loFiles = GetDependencies()
-        loDistribution = CREATEOBJECT("Distribution")
-        loDistribution.Distribute(loFiles,lcSourcepath,lcDestpath)
-        * #TODO Copy file *.md and *.h and do the test ( see current dest rep )   
-
-ENDFUNC 
-
-FUNCTION TestProg(tvParm1,tvParm2,tvParm3)
-
-	do classes\test\jstest_bases.prg 
-	do classes\test\jstest_messages.prg 
-
-	do classes\test\jstest_Tokenizer.prg 
-	do classes\test\jstest_Parser.prg
-	do classes\test\jstest_Stringify.prg
-		
-ENDFUNC 
-
-FUNCTION CommonProg(tcRole,tvParm1,tvParm2,tvParm3)
-
-ENDFUNC 
-
-*-* Here we have specific project interface creation 
-DEFINE CLASS JsonHandler AS jsCustom OLEPUBLIC 
-
-    cErrorMsg = ""
-    nError = 0
-	IsJsonLdObject = .F.
+	cErrorMsg = ""
+	nError = 0
+	IsJsonLdObject = .f.
 	rdFoxprofix = "object_"
-	Unicode = .F.
-	
-	DIMENSION dependencies[1,2]
+	unicode = .f.
 
-    FUNCTION serialize(loObject)
-        LOCAL loStringify, lcJson
+	dimension dependencies[1,2]
 
-        loStringify = CREATEOBJECT("Stringify")
-        WITH loStringify
-            .IsJsonLdObject = THIS.IsJsonLdObject
-            .rdFoxprofix = THIS.rdFoxprofix
-            .Unicode = THIS.Unicode
-        ENDWITH
+	function serialize(loObject)
+		local loStringify, lcJson
 
-        lcJson = loStringify.stringify(loObject)
+		loStringify = createobject("Stringify")
+		with loStringify
+			.IsJsonLdObject = this.IsJsonLdObject
+			.rdFoxprofix = this.rdFoxprofix
+			.unicode = this.unicode
+		endwith
 
-        IF loStringify.nError = JS_FATAL_ERROR
-            THIS.cErrorMsg = loStringify.cErrorMsg
-            THIS.nError = JS_FATAL_ERROR
-            RETURN .NULL.
-        ENDIF
+		lcJson = loStringify.stringify(loObject)
 
-        RETURN lcJson
-    ENDFUNC
+		if loStringify.nError = JS_FATAL_ERROR
+			this.cErrorMsg = loStringify.cErrorMsg
+			this.nError = JS_FATAL_ERROR
+			return .null.
+		endif
 
-    FUNCTION deserialize(lcJson)
-        LOCAL loParser, loObject
+		return lcJson
+	endfunc
 
-        loParser = CREATEOBJECT("Parser")
-		WITH loParser
-            .IsJsonLdObject = THIS.IsJsonLdObject
-            .rdFoxprofix = THIS.rdFoxprofix
-            .Unicode = THIS.Unicode
-        ENDWITH
+	function deserialize(lcJson)
+		local loParser, loObject
 
-        loObject = loParser.parseJson(lcJson)
+		loParser = createobject("Parser")
+		with loParser
+			.IsJsonLdObject = this.IsJsonLdObject
+			.rdFoxprofix = this.rdFoxprofix
+			.unicode = this.unicode
+		endwith
 
-        IF loParser.nError = JS_FATAL_ERROR
-            THIS.cErrorMsg = loParser.cErrorMsg
-            THIS.nError = JS_FATAL_ERROR
-            RETURN .NULL.
-        ENDIF
+		loObject = loParser.parseJson(lcJson)
 
-        RETURN loObject
-    ENDFUNC
+		if loParser.nError = JS_FATAL_ERROR
+			this.cErrorMsg = loParser.cErrorMsg
+			this.nError = JS_FATAL_ERROR
+			return .null.
+		endif
 
-	FUNCTION GetDependencies 
-		RETURN @THIS.dependencies
-	ENDFUNC 
-	
-	
-ENDDEFINE
+		return loObject
+	endfunc
+
+	function GetDependencies
+		return @this.dependencies
+	endfunc
+
+	function Initialize_MVC()
+
+		release oFactory
+		public oFactory
+
+		oFactory = createobject("jsfactory")
+
+	endfunc
+
+	function dumpTokensToFile(toTokens,tcDumpFile)
+		local loTokenizer
+		loTokenizer =createobject("tokenizer")
+		loTokenizer.dumpTokensToFile(toTokens,tcDumpFile)
+	endfunc
+
+enddefine
+
+define class dependencies as custom
+
+	function load_librarys
+
+		*-* do webmove\j_classes_dependencies.prg
+	endfunc
+
+	function GetDependencies(tlAddLocalMain)
+
+		loFiles = createobject("collection")
+
+		loFiles.add('classes\bases\jsbases.prg')
+		loFiles.add('classes\bases\jsbases_messages.prg')
+		loFiles.add('classes\bases\jsbases_array.prg')
+		loFiles.add('classes\bases\jsbases_factory.prg')
+		loFiles.add('classes\bases\jsbases_cursors.prg')
+		loFiles.add('classes\bases\jsbases_data.prg')
+		loFiles.add('classes\bases\jsbases_application.prg')
+
+
+		loFiles.add('classes\json\json_Tokenizer.prg')
+		loFiles.add('classes\json\json_Parser.prg')
+		loFiles.add('classes\json\json_Stringify.prg')
+		loFiles.add('classes\json\json_translateunicode.prg')
+
+		loFiles.add('classes\tools\jstools_distribution.prg')
+
+		* Add for debug purpose local main
+		if tlAddLocalMain
+			loFiles.add('main.prg')
+		endif
+
+		return loFiles
+
+	endfunc
+
+	function TestProg(tvParm1,tvParm2,tvParm3)
+
+		do classes\test\jstest_bases.prg
+		do classes\test\jstest_messages.prg
+
+		do classes\test\jstest_Tokenizer.prg
+		do classes\test\jstest_Stringify.prg
+
+	endfunc
+
+	function init()
+
+		* Load all root dependencies
+		* Generaly configurated in childs
+		this.load_librarys()
+
+		* Current project dependencies
+		local loDependencies, lnI, lcFile
+		loDependencies = this.GetDependencies(.t.)
+		for lnI = 1 to loDependencies.count
+			lcFile = loDependencies.item(lnI)
+			set procedure to (lcFile) additive
+		endfor
+
+	endfunc
+
+enddefine
+
+
 

@@ -1,3 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.2.0.
+CLEAR 
+
+* Version 1.3.0.
+? "To do test" 

@@ -6,7 +6,7 @@ loParser = CREATEOBJECT("Parser")
 loStringify = CREATEOBJECT("Stringify")
 
 * Parse the JSON
-lcTypeJson =  FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/TypeTest.json") 
+lcTypeJson =  FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/VarTypeTest.json") 
 
 loTypeObject = loParser.ParseJson(lcTypeJson)
 * Modify the object (example: change the title)
@@ -47,7 +47,7 @@ IF VARTYPE(loTypeObject.isStudent) == "L" .AND. loTypeObject.isStudent == .F.
 ELSE 
 	? "Error ! - Parser Logical TypeTest"
 ENDIF
-* SET DATE TO DMY
+SET DATE TO DMY
 IF VARTYPE(loTypeObject.graduationDate) == "D" .AND. loTypeObject.graduationDate == CTOD("15/05/23")
 	? "Parser Date TypeTest ok"
 ELSE 
@@ -60,13 +60,7 @@ ELSE
 ENDIF
 
 * Save the modified object back to a file
-loStringify.saveToFile("C:/Webconnectionprojects/WebNode/devtools/json-fox/classes/test/UpdatedTypeTest.json", loTypeObject,.T.)
+loStringify.saveToFile("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/UpdatedVarTypeTest.json", loTypeObject,.T.)
 
-* Parse the JSON
-lcEmptyTypeJson =  FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/test/EmptyTypeTest.json") 
-
-loTypeObject = loParser.ParseJson(lcEmptyTypeJson)
-* Modify the object (example: change the title)
-SET STEP ON 
-
+SET DATE TO FRENCH 
 ON ERROR 

@@ -1,5 +1,88 @@
 {
-    "fields":{
+    "fields":[
+        {
+        "col":"col-md-6",
+        "label":"First Name",
+        "name":"firstName",
+        "placeholder":"Enter your first name",
+        "required":true,
+        "type":"text"
     },
+        {
+        "col":"col-md-6",
+        "label":"Last Name",
+        "name":"lastName",
+        "placeholder":"Enter your last name",
+        "required":true,
+        "type":"text"
+    },
+        {
+        "col":"col-md-12",
+        "label":"Email",
+        "name":"email",
+        "placeholder":"Enter your email",
+        "required":true,
+        "type":"email"
+    },
+        {
+        "col":"col-md-12",
+        "label":"Password",
+        "name":"password",
+        "placeholder":"Enter your password",
+        "required":true,
+        "type":"password"
+    },
+        {
+        "col":"col-md-6",
+        "label":"Country",
+        "name":"country",
+        "options":[
+            {
+            "label":"Select your country",
+            "value":""
+        },
+            {
+            "label":"United States",
+            "value":"us"
+        },
+            {
+            "label":"Canada",
+            "value":"ca"
+        },
+            {
+            "label":"United Kingdom",
+            "value":"uk"
+        }],
+        "required":true,
+        "type":"select"
+    },
+        {
+        "col":"col-md-6",
+        "label":"Gender",
+        "name":"gender",
+        "options":[
+            {
+            "label":"Male",
+            "value":"male"
+        },
+            {
+            "label":"Female",
+            "value":"female"
+        }],
+        "required":true,
+        "type":"radio"
+    },
+        {
+        "col":"col-md-12",
+        "label":"Agree to Terms",
+        "name":"terms",
+        "required":true,
+        "type":"checkbox"
+    },
+        {
+        "col":"col-md-12",
+        "label":"Register",
+        "type":"submit"
+    }],
     "title":"Updated User Registration"
 }

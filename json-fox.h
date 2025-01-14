@@ -1,13 +1,15 @@
 * JSON-Fox Tokenizer Constants
 
-#Define JS_LBRACE   	'{'
-#Define JS_RBRACE	    '}'
-#Define JS_LBRACKET 	'['
-#Define JS_RBRACKET 	']'
-#Define JS_COMMA	    ','
-#Define JS_COLON    	':'
-#Define JS_STRINGDELIM	'"'
-#Define JS_ESCAPE	    '\\'
+#Define JS_LBRACE   		'{'
+#Define JS_RBRACE	    	'}'
+#Define JS_LBRACKET 		'['
+#Define JS_LBRACKET_2DIM	'[['
+#Define JS_RBRACKET 		']'
+#Define JS_RBRACKET_2DIM	']]'
+#Define JS_COMMA		    ','
+#Define JS_COLON    		':'
+#Define JS_STRINGDELIM		'"'
+#Define JS_ESCAPE	   		'\\'
 
 #Define JS_BOOLEAN      "bol"
 #Define JS_DATE         "dat"
