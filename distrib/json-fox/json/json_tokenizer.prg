@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.0.
+* Version 1.3.2
 
 * This component breaks the input JSON string into tokens.
 * Each token represents a meaningful string element
@@ -36,6 +36,7 @@ define class Tokenizer as jscustom
 
 		do while i <= len(tcInput)
 			lcCurrentChar = substr(tcInput, i, 1)
+
 			do case
 				case empty(lcCurrentChar)
 					* Skip whitespace
@@ -50,33 +51,27 @@ define class Tokenizer as jscustom
 				case lcCurrentChar == '}'
 					this.tokens.add(JS_RBRACE)
 				case lcCurrentChar == '['
-					*if this.isMultiDimArray(lcCurrentChar, tcInput, @i)
-					*	* Multi-dimensional array not supported yet
-					*	* #TODO Implement support for multi-dimensional arrays
-					*	SetError(this,"Multi-dimensional arrays are not supported",JS_FATAL_ERROR)
-					*	exit
-					*endif
-					this.tokens.add(JS_LBRACKET)
+					lnBracket = this.isMultiDimArray(lcCurrentChar, tcInput, @i)
+					if lnBracket = 1
+						this.tokens.add(JS_LBRACKET)
+					else
+						if lnBracket = 2
+							this.tokens.add(JS_LBRACKET_2DIM)
+						else
+							* 3D array not supported yet
+							SetError(this,"3D arrays are not supported by VFP",JS_FATAL_ERROR)
+						endif
+					endif
 				case lcCurrentChar == ']'
 					this.tokens.add(JS_RBRACKET)
 				case lcCurrentChar == ':'
 					this.tokens.add(JS_COLON)
 				case lcCurrentChar == ','
 					this.tokens.add(JS_COMMA)
+				case lcCurrentChar == '\'
+					* Handle comments ?
 				case lcCurrentChar == '"'
-					lcValue = ""
-					if this.isDate(lcCurrentChar, tcInput, @i, @lcValue)
-						this.tokens.add(JS_DATE)
-					else
-						this.tokens.add(JS_STRING)
-					endif
-					i = i + 1
-					lcCurrentChar = substr(tcInput, i, 1)
-					do while lcCurrentChar != '"' and i <= len(tcInput)
-						lcValue = lcValue + lcCurrentChar
-						i = i + 1
-						lcCurrentChar = substr(tcInput, i, 1)
-					enddo
+					this.isString(lcCurrentchar, tcInput, @i, @lcValue)
 					this.tokens.add(lcValue)
 				case this.isBoolean(lcCurrentChar, tcInput, @i, @lcValue)
 					this.tokens.add(JS_BOOLEAN)
@@ -104,6 +99,44 @@ define class Tokenizer as jscustom
 	* There are only " values without quotes in JSON
 	* Boolean, Numeric and Null values are not enclosed in quotes
 	* So we need to check if the current character is part of a boolean, numeric or null value
+	function isString(char, tcInput, rnI, rcValue)
+		rcValue = ""
+		if this.isDate(char, tcInput, @rni)
+			this.tokens.add(JS_DATE)
+		else
+			this.tokens.add(JS_STRING)
+		endif
+		rni = rni + 1
+		lcCurrentChar = substr(tcInput, rni, 1)
+		do while lcCurrentChar != '"' and rni <= len(tcInput)
+			if lcCurrentChar == '\'
+				* Handle escape character
+				rni = rni + 1
+				* Can use lcCurrentChar because next token could be equal to "
+				* and end the do while ...
+				lcInCurrentChar = substr(tcInput, rni, 1)
+				do case
+					case lcInCurrentChar == "n"
+						rcValue = rcValue + chr(10)
+					case lcInCurrentChar == "t"
+						rcValue = rcValue + chr(9)
+					case lcInCurrentChar == "r"
+						rcValue = rcValue + chr(13)
+					case lcInCurrentChar == "b"
+						rcValue = rcValue + chr(8)
+					case lcInCurrentChar == "f"
+						rcValue = rcValue + chr(10)
+					otherwise
+						rcValue = rcValue + lcInCurrentChar
+				endcase
+			else
+				rcValue = rcValue + lcCurrentChar
+			endif
+			rni = rni + 1
+			lcCurrentChar = substr(tcInput, rni, 1)
+		enddo
+
+	endfunc
 
 	function isBoolean(char, tcInput, rnI, rcValue)
 		do case
@@ -161,7 +194,7 @@ define class Tokenizer as jscustom
 		endif
 	endfunc
 
-	function isDate(char, tcInput, rnI, rcValue)
+	function isDate(char, tcInput, rnI)
 		if isdigit(substr(tcInput, rnI+1, 1)) .and. substr(tcInput, rnI+5, 1)="-"
 			return .t.
 		else
@@ -195,7 +228,37 @@ define class Tokenizer as jscustom
 			endif
 			lnI = lnI + 1
 		enddo
-		return lnBracketCount > 1
+		return lnBracketCount
+	endfunc
+
+	function dumpTokensToFile(toTokens,tcDumpFile)
+		local lnI, lcToken, lcValue, lnTokenCount, lcOutput
+
+		lcOutput = ""
+
+		if vartype(toTokens) <> "O" .or. toTokens.count = 0
+			if vartype(this.oTokens) <> "O" .or. this.oTokens.count = 0
+				lcOutput = "Empty tokens, tokens.count = 0 "
+			else
+				toTokens = this.oTokens
+			endif
+		endif
+
+		for lnI = 1 to toTokens.count
+			lcToken = toTokens.item(lnI)
+			if lcToken = ","
+				llNelwLine = .t.
+			else
+				llNelwLine = .f.
+			endif
+			lcOutput = lcOutput + " - " + transform(lni) + ":" + lcToken  + iif(llNelwLine,chr(10),"*")
+		endfor
+		if vartype(tcDumpFile) = T_CHARACTER
+			strtofile(lcOutput, tcDumpfile)
+		else
+			strtofile(lcOutput, "token-content.txt")
+		endif
+		return .t.
 	endfunc
 
 enddefine

@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.0.1
+* Version 1.3.2
 * ResetError(THIS) is a function THIS.ResetError() is osolete
 
 define class Parser as jscustom
@@ -16,10 +16,10 @@ define class Parser as jscustom
 
 		local loTokenizer, loObject, loUnicodeObject,lcSavedDateSetValue,lcSavedHoursSetValue
 
-		lcSavedDateSetValue = SET("DATE")
-		SET DATE TO YMD 
-		lcSavedHoursSetValue = SET("HOURS")
-		SET HOURS TO 24 
+		lcSavedDateSetValue = set("DATE")
+		set date to YMD
+		lcSavedHoursSetValue = set("HOURS")
+		set hours to 24
 
 		if vartype(tcInput)<> T_CHARACTER .or. empty(tcInput)
 			SetError(this,"Wrong input string",JS_FATAL_ERROR)
@@ -69,9 +69,9 @@ define class Parser as jscustom
 			loUnicodeObject = createobject("JsonTranslateUnicode")
 			loObject = loUnicodeObject.DecodeUnicodeInObject(loObject)
 		endif
-		
-		SET DATE TO &lcSavedDateSetValue.
-		SET HOURS TO &lcSavedHoursSetValue
+
+		set date to &lcSavedDateSetValue.
+		set hours to &lcSavedHoursSetValue
 
 		return loObject
 
@@ -191,16 +191,20 @@ define class Parser as jscustom
 		return loObject
 
 	endfunc
-	
+
 	function AddArray(roObject, lcProperty, toArray)
-	    * Add the array object to the object
-		LOCAL loArray
-		* jsData is a custom class to handle arrays having hidden properties
-		loArray = CREATEOBJECT("jsdata")
-		* toArray contains the array 
-		toArray.GetArray(@loArray)
-        ADDPROPERTY(roObject, lcProperty,loArray)
-	endfunc 
+		if vartype(toArray) <> "O"
+			* Add the array object to the object
+			local loArray
+			* jsData is a custom class to handle arrays having hidden properties
+			loArray = createobject("jsParseArray")
+			* toArray contains the array
+			toArray.GetArray(@loArray)
+			addproperty(roObject, lcProperty,loArray)
+		else
+			addproperty(roObject, lcProperty,toArray)
+		endif
+	endfunc
 
 	function parseArray(loArray, tlIs2DArray)
 
@@ -218,7 +222,7 @@ define class Parser as jscustom
 
 		if vartype(loArray) <> "O"
 			* Create an empty array object
-			loArray = createobject("jsArray")
+			loArray = createobject("jsParseArray")
 			loArray.IsColumnData = .f.
 			* nCol = 1 by design
 		else

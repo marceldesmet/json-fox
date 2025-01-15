@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.0.
+* Version 1.3.2
 
 * This component breaks the input JSON string into tokens.
 * Each token represents a meaningful string element

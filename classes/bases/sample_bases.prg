@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.0.0.
+* Version 1.3.2
 
 lparameters tcRole,tvParm1,tvParm2,tvParm3
 
@@ -37,10 +37,11 @@ do case
 		desk.main(tcRole,tvParm1,tvParm2,tvParm3)
 endcase
 
+return
+
 ************* Start your application here
 
-
-define class json-fox as jsApplication olepublic
+define class JsonHandler as jsApplication olepublic
 
 	cConfig = "HtmlDataConfig"
 	cMsg	= "LogMessages"

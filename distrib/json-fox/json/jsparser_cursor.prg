@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.0.1
+* Version 1.3.2
 * ResetError(THIS) is a function THIS.ResetError() is osolete
 
 * CursorParser class

@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.0.
+* Version 1.3.2
 
 define class jsfactory as jscollection
 
@@ -55,5 +55,13 @@ define class jsfactory as jscollection
 		loObject.cName = tcName
 		return loObject
 	endproc
+
+	procedure make_message(tcCateg)
+		LOCAL loMessage
+		loMessage = CREATEOBJECT("EMPTY")
+		ADDPROPERTY(loMessage,"category",tcCateg)
+		ADDPROPERTY(loMessage,"message","")
+		RETURN loMessage
+	endproc	
 
 enddefine

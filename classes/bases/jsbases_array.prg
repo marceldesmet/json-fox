@@ -1,16 +1,16 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.0.
+* Version 1.3.2
 define class jsArray as jscustom
 
 	name = "jsArray"
-	
-	IsColumnData	= .F.
+
+	IsColumnData	= .f.
 
 	dimension item[1,1]
 	item[1,1] = .f.
 
-	
+
 	nRow = 1
 	nCol = 1
 
@@ -31,9 +31,9 @@ define class jsArray as jscustom
 	function push(tvItem)
 		* Set the current row to the last row in the column
 		this.nRow = this.aPushLevel[THIS.nCol]
-		IF VARTYPE(this.item[THIS.nRow,THIS.nCol])=T_OBJECT
+		if vartype(this.item[THIS.nRow,THIS.nCol])=T_OBJECT
 			this.nRow = this.nRow + 1
-		ENDIF 	
+		endif
 		if empty(this.item[THIS.nRow,THIS.nCol])
 			this.item[THIS.nRow,THIS.nCol] = tvItem
 			this.aPushLevel[THIS.nCol] = this.nRow
@@ -55,7 +55,7 @@ define class jsArray as jscustom
 	endfunc
 
 	function GetArray(roArray)
-		ACOPY(THIS.item,roArray.Item)
+		acopy(this.item,roArray.item)
 	endfunc
 
 	function add(tvItem)
@@ -113,66 +113,77 @@ define class jsArray as jscustom
 
 enddefine
 
+define class jsdata as jsParseArray
+	hidden IsColumnData
+	hidden add
+	
+	hidden push
+	hidden nRow
+	hidden nCol
+	hidden aPushLevel
+	
+enddefine
+
 * Jsdata is array wrapepr for json-fox
 * It is used to store data in array format
 * and then convert it to json
 * There are a lot of hidden properties and methods
 * because the serialization is done by json-fox
-* See "+GA" in json-fox stringify method 
-DEFINE CLASS jsdata AS jsArray
+* See "+GA" in json-fox stringify method
+define class jsParseArray as jsArray
 
 	* exposed property
-	DIMENSION Item[1,1]
-	
+	dimension item[1,1]
+	IsColumnData = .f.
+
+	protected push
+	protected nRow
+	protected nCol
+	protected aPushLevel
+
 	* hidden properties
-	HIDDEN name
-	HIDDEN classlibrary
-	HIDDEN addobject
-	HIDDEN baseclass
-	HIDDEN class
-	HIDDEN addproperty
-	HIDDEN writemethod
-	HIDDEN writeexpression
-	HIDDEN width
-	HIDDEN whatsthishelpid
-	HIDDEN tag
-	HIDDEN showwhatsthis
-	HIDDEN saveasclass
-	HIDDEN resettodefault
-	HIDDEN removeobject
-	HIDDEN readmethod
-	HIDDEN readexpression
-	HIDDEN picture
-	HIDDEN parentclass
-	HIDDEN parent
-	HIDDEN objects
-	HIDDEN newobject
-	HIDDEN init
-	HIDDEN helpcontextid
-	HIDDEN height
-	HIDDEN error
-	HIDDEN destroy
-	HIDDEN controls
-	HIDDEN controlcount
-	HIDDEN comment
-	HIDDEN cloneobject
-	HIDDEN top
-	HIDDEN left
-	HIDDEN IsColumnData
-	HIDDEN nRow 
-	HIDDEN nCol
-	HIDDEN aPushLevel
-	HIDDEN lSendError
-	HIDDEN oSendError 
-	HIDDEN nError 
-	HIDDEN lError
-	HIDDEN cErrorMsg
-	HIDDEN cErrorMethod
-	HIDDEN add
-	HIDDEN getarray
-	HIDDEN isarray
-	HIDDEN push 
-	HIDDEN cName
-	
-ENDDEFINE 
+	hidden name
+	hidden classlibrary
+	hidden addobject
+	hidden baseclass
+	hidden class
+	hidden addproperty
+	hidden writemethod
+	hidden writeexpression
+	hidden width
+	hidden whatsthishelpid
+	hidden tag
+	hidden showwhatsthis
+	hidden saveasclass
+	hidden resettodefault
+	hidden removeobject
+	hidden readmethod
+	hidden readexpression
+	hidden picture
+	hidden parentclass
+	hidden parent
+	hidden objects
+	hidden newobject
+	hidden init
+	hidden helpcontextid
+	hidden height
+	hidden error
+	hidden destroy
+	hidden controls
+	hidden controlcount
+	hidden comment
+	hidden cloneobject
+	hidden top
+	hidden left
+	hidden lSendError
+	hidden oSendError
+	hidden nError
+	hidden lError
+	hidden cErrorMsg
+	hidden cErrorMethod
+	hidden getarray
+	hidden isarray
+	hidden cName
+
+enddefine
 

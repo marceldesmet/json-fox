@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.0.
+* Version 1.3.2
 
 DEFINE CLASS Distribution AS jsCustom
     FUNCTION CreateDirectory(tcDirectory)

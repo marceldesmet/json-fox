@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.0.1.
+* Version 1.3.2.
 * Missing function ResetError() 
 
 FUNCTION ErrorHandler(toCallingObject, tcMessage, tnError, tcMethod, tnLine)

@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.0.1.
+* Version 1.3.2.
 * Missing function ResetError() 
 
 FUNCTION ErrorHandler(toCallingObject, tcMessage, tnError, tcMethod, tnLine)
@@ -43,11 +43,16 @@ FUNCTION ErrorHandler(toCallingObject, tcMessage, tnError, tcMethod, tnLine)
 	ENDIF 
     
 	lcMessage = lcMessage + "Error "+ TRANSFORM(lnError) +" in "+ lcMethod + " at line " + TRANSFORM(lnLine) + " - Last Message() "+  + lcMessage
+
 	logm(lcMessage)
 
 ENDFUNC
 
 FUNCTION Logm(tcMessage,tcLogFile)
+
+    IF VARTYPE(msg) = T_OBJECT  .AND. PEMSTATUS(msg,"llogmode",5) .AND. msg.llogmode
+       	msg.Add(tcMessage)
+	ENDIF 
 
 	LOCAL lcMessage,lcLogFile	
 	lcMessage = IIF(VARTYPE(tcMessage)==T_CHARACTER,tcMessage,"Unknow message")

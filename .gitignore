@@ -1,12 +1,20 @@
 #VFP 
 *.fxp
+*.FXP
 *.bak
+*.BAK
 *.tmp
+*.TMP
 *.tbk
+*.TBK
 *.err
+*.ERR
 *.pdb
+*.PDB
 *.tlb
+*.TLB
 *.vbr
+*.VBR
 FOXUSER.*
 FXUResults.*
 #NOTE: If you use Web Control Framework

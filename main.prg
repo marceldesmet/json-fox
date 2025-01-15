@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.0.0.
+* Version 1.3.2
 
 lparameters tcRole,tvParm1,tvParm2,tvParm3
 
@@ -10,11 +10,15 @@ if application.startmode = 4
 	_screen.visible = .f.
 endif
 
-public json,dep
+public json,dep,msg,fac
 
 * Load
 dep = createobject("dependencies")
 json = createobject("JsonHandler")
+msg = createobject("jsmessageQueue")
+msg.lLogMode = .T. 
+fac = createobject("jsfactory")
+
 * Start here desktop or server
 json.Initialize_MVC()
 
@@ -26,7 +30,7 @@ do case
 	case lower(tcRole) = "distrib"
 		* Copy to the distrib repertory when new release
 		return dep.CopytoDistribute()
-	case lower(tcRole) = "debug"
+	case lower(tcRole) = "debug" .or. lower(tcRole) = "loaddep"
 		* Used for debuging
 		if vartype(goApp) <> "O"
 			public goApp
@@ -36,14 +40,15 @@ do case
 		on error do ErrorHandler with ;
 			.null., message( ), error(), program( ), lineno( )
 	case lower(tcRole) = "main"
-		* load libs only
+		do form classes\ui\jsonviewer
 		return
 	otherwise
 		return
 endcase
 
 ************* Start your application here
-*-* Here we have specific project interface creation
+* Here we have specific project interface creation
+
 define class JsonHandler as jsApplication olepublic
 
 	cErrorMsg = ""
@@ -54,9 +59,8 @@ define class JsonHandler as jsApplication olepublic
 
 	dimension dependencies[1,2]
 
-	function serialize(loObject)
+	function serialize(loObject,tlBeautify)
 		local loStringify, lcJson
-
 		loStringify = createobject("Stringify")
 		with loStringify
 			.IsJsonLdObject = this.IsJsonLdObject
@@ -64,7 +68,7 @@ define class JsonHandler as jsApplication olepublic
 			.unicode = this.unicode
 		endwith
 
-		lcJson = loStringify.stringify(loObject)
+		lcJson = loStringify.stringify(loObject,tlBeautify)
 
 		if loStringify.nError = JS_FATAL_ERROR
 			this.cErrorMsg = loStringify.cErrorMsg
@@ -104,7 +108,6 @@ define class JsonHandler as jsApplication olepublic
 
 		release oFactory
 		public oFactory
-
 		oFactory = createobject("jsfactory")
 
 	endfunc
@@ -113,6 +116,13 @@ define class JsonHandler as jsApplication olepublic
 		local loTokenizer
 		loTokenizer =createobject("tokenizer")
 		loTokenizer.dumpTokensToFile(toTokens,tcDumpFile)
+	endfunc
+
+	function FormatJson(tcJson)
+		local loJson
+		loJson = this.deSerialize(tcJson)
+		tcFormattedJson = this.Serialize(loJson,.t.)
+		return tcFormattedJson
 	endfunc
 
 enddefine
@@ -135,7 +145,7 @@ define class dependencies as custom
 		loFiles.add('classes\bases\jsbases_cursors.prg')
 		loFiles.add('classes\bases\jsbases_data.prg')
 		loFiles.add('classes\bases\jsbases_application.prg')
-
+		loFiles.add('classes\bases\jsbases_messages_queue.prg') 
 
 		loFiles.add('classes\json\json_Tokenizer.prg')
 		loFiles.add('classes\json\json_Parser.prg')
@@ -155,11 +165,9 @@ define class dependencies as custom
 
 	function TestProg(tvParm1,tvParm2,tvParm3)
 
-		do classes\test\jstest_bases.prg
-		do classes\test\jstest_messages.prg
 
-		do classes\test\jstest_Tokenizer.prg
-		do classes\test\jstest_Stringify.prg
+		do classes\src_test\test_Tokenizer.prg
+		do classes\src_test\test_Stringify.prg
 
 	endfunc
 

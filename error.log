@@ -1275,3 +1275,141 @@
 2025/01/14 18:34:06 - 3D arrays are not supported by VFP
 2025/01/14 18:34:56 - 3D arrays are not supported by VFP
 2025/01/14 18:34:56 - 3D arrays are not supported by VFP
+2025/01/14 21:12:30 - Error 1 in JSTEST_HTMLHELPER_PAGES at line 2 - Last Message() 
+2025/01/14 21:12:39 - Error 1 in JSTEST_HTMLHELPER_PAGES at line 9 - Last Message() 
+2025/01/14 21:12:46 - Wrong input string
+2025/01/14 21:12:46 - Wrong input string
+2025/01/14 21:12:48 - Error 1734 in JSTEST_HTMLHELPER_PAGES at line 17 - Last Message() 
+2025/01/14 22:08:02 - Error 1 in LOAD_LIBRARYS at line 52 - Last Message() 
+2025/01/14 22:08:02 - Error 1 in APP_USING_LIBS at line 97 - Last Message() 
+2025/01/14 22:08:02 - Error 1 in APP_USING_LIBS at line 97 - Last Message() 
+2025/01/14 22:08:02 - Error 1 in APP_USING_LIBS at line 97 - Last Message() 
+2025/01/14 22:08:02 - Error 1 in APP_USING_LIBS at line 97 - Last Message() 
+2025/01/14 22:08:02 - Error 1 in APP_USING_LIBS at line 97 - Last Message() 
+2025/01/14 22:08:02 - Error 1 in APP_USING_LIBS at line 97 - Last Message() 
+2025/01/14 22:08:06 - Error 1 in JSTEST_HTMLHELPER_PAGES at line 9 - Last Message() 
+2025/01/15 10:17:39 - Error 1925 in JSONEDITOR.INIT at line 3 - Last Message() 
+2025/01/15 10:49:36 - Error 1 in MAIN at line 39 - Last Message() 
+2025/01/15 11:35:09 - Error 1229 in JSONEDITOR.COMMAND2.CLICK at line 2 - Last Message() 
+2025/01/15 11:36:36 - Error 1925 in Jsonhandler.generatecolorizedrtfcontent() at line 121 - Last Message() 
+2025/01/15 11:37:20 AM - Error 1734 in Jsonhandler.generatecolorizedrtfcontent() at line 122 - Last Message() 
+2025/01/15 11:37:48 - Expected a '{' at current index 1
+2025/01/15 11:37:48 - Expected a '{' at current index 1
+2025/01/15 11:51:11 - Expected a '{' at current index 1
+2025/01/15 11:51:11 - Expected a '{' at current index 1
+2025/01/15 11:52:25 - Expected a '{' at current index 1
+2025/01/15 11:52:25 - Expected a '{' at current index 1
+2025/01/15 12:05:54 PM - Error 1734 in JSONEDITOR.COMMAND2.CLICK at line 6 - Last Message() 
+2025/01/15 12:13:18 PM - Error 11 in Jsonhandler.formatjson() at line 157 - Last Message() 
+2025/01/15 02:37:40 PM - Error 1733 in JSONEDITOR.COMMAND2.CLICK at line 4 - Last Message() 
+2025/01/15 02:37:54 PM - Error 1923 in JSONEDITOR.COMMAND2.CLICK at line 6 - Last Message() 
+01/15/2025 02:39:31 PM - Error 1238 in Jsonhandler.formatjson() at line 118 - Last Message() 
+01/15/2025 02:39:31 PM - Error 12 in Jsonhandler.formatjson() at line 119 - Last Message() 
+01/15/2025 02:39:31 PM - Error 12 in Jsonhandler.formatjson() at line 120 - Last Message() 
+01/15/2025 02:39:31 PM - Error 11 in Jsonhandler.generatertfcontent() at line 136 - Last Message() 
+01/15/2025 02:39:31 PM - Error 11 in Jsonhandler.generatertfcontent() at line 140 - Last Message() 
+01/15/2025 02:46:18 PM - Error 1230 in Jsonhandler.generatertfcontent() at line 139 - Last Message() 
+01/15/2025 02:46:18 PM - Error 12 in Jsonhandler.generatertfcontent() at line 140 - Last Message() 
+01/15/2025 02:46:18 PM - Error 96 in Jsonhandler.generatertfcontent() at line 141 - Last Message() 
+01/15/2025 02:47:41 PM - Error 1230 in Jsonhandler.generatertfcontent() at line 139 - Last Message() 
+01/15/2025 02:47:56 PM - Error 12 in Jsonhandler.generatertfcontent() at line 140 - Last Message() 
+2025/01/15 15:40:41 - Expected a '}' at current index 62
+2025/01/15 15:40:41 - Expected a '}' at current index 62
+2025/01/15 15:40:46 - 3D arrays are not supported by VFP
+2025/01/15 15:40:46 - 3D arrays are not supported by VFP
+2025/01/15 15:40:50 - Expected a '{' at current index 1
+2025/01/15 15:40:50 - Expected a '{' at current index 1
+2025/01/15 15:41:12 - 3D arrays are not supported by VFP
+2025/01/15 15:41:12 - 3D arrays are not supported by VFP
+2025/01/15 18:07:51 - Expected a '}' at current index 62
+2025/01/15 18:07:51 - Expected a '}' at current index 62
+2025/01/15 18:08:53 - Expected a '}' at current index 62
+2025/01/15 18:08:53 - Expected a '}' at current index 62
+2025/01/15 18:11:36 - Expected a '}' at current index 62
+2025/01/15 18:11:36 - Expected a '}' at current index 62
+2025/01/15 18:37:50 - Expected a '}' at current index 62
+2025/01/15 18:37:50 - Expected a '}' at current index 62
+2025/01/15 06:37:50 PM - Error 107 in Jsmessagequeue.read() at line 43 - Last Message() 
+2025/01/15 06:37:50 PM - Error 12 in Jsmessagequeue.read() at line 44 - Last Message() 
+2025/01/15 06:37:50 PM - Error 1924 in Jsmessagequeue.read() at line 43 - Last Message() 
+2025/01/15 06:37:50 PM - Error 1924 in Jsmessagequeue.read() at line 44 - Last Message() 
+2025/01/15 06:37:50 PM - Error 107 in Jsmessagequeue.read() at line 43 - Last Message() 
+2025/01/15 06:37:50 PM - Error 12 in Jsmessagequeue.read() at line 44 - Last Message() 
+2025/01/15 06:37:50 PM - Error 1924 in Jsmessagequeue.read() at line 43 - Last Message() 
+2025/01/15 06:37:50 PM - Error 1924 in Jsmessagequeue.read() at line 44 - Last Message() 
+2025/01/15 18:48:13 - Expected a '}' at current index 62
+2025/01/15 18:48:13 - Expected a '}' at current index 62
+2025/01/15 06:48:13 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 06:48:13 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 06:48:13 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 06:48:13 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 06:48:13 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 06:48:13 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 19:11:52 - Expected a '}' at current index 62
+2025/01/15 19:11:52 - Expected a '}' at current index 62
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:11:52 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:11:52 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 19:13:05 - Expected a '}' at current index 62
+2025/01/15 19:13:05 - Expected a '}' at current index 62
+2025/01/15 07:13:05 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:13:05 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:13:05 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:13:05 PM - Error 107 in Jsmessagequeue.read() at line 46 - Last Message() 
+2025/01/15 07:13:05 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:13:05 PM - Error 12 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 19:14:26 - Expected a '}' at current index 62
+2025/01/15 19:14:26 - Expected a '}' at current index 62
+2025/01/15 07:14:26 PM - Error 107 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:14:26 PM - Error 107 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 19:26:24 - Expected a '}' at current index 62
+2025/01/15 19:26:24 - Expected a '}' at current index 62
+2025/01/15 07:26:24 PM - Error 107 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 07:26:24 PM - Error 107 in Jsmessagequeue.read() at line 50 - Last Message() 
+2025/01/15 19:31:57 - Expected a '}' at current index 62
+2025/01/15 19:31:57 - Expected a '}' at current index 62
+2025/01/15 07:32:01 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:32:07 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:32:12 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:32:15 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 19:41:21 - Expected a '}' at current index 62
+2025/01/15 19:41:21 - Expected a '}' at current index 62
+2025/01/15 19:44:31 - Expected a '}' at current index 62
+2025/01/15 19:44:31 - Expected a '}' at current index 62
+2025/01/15 07:44:31 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:44:31 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:44:31 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:44:31 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 19:46:47 - Expected a '}' at current index 62
+2025/01/15 19:46:47 - Expected a '}' at current index 62
+2025/01/15 07:46:47 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:46:47 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:46:47 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 
+2025/01/15 07:46:47 PM - Error 12 in Jsmessagequeue.read() at line 47 - Last Message() 

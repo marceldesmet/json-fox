@@ -1,50 +1,59 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.0.
+* Version 1.3.2
 
-DEFINE CLASS jsfactory AS jscollection 
+define class jsfactory as jscollection
 
-	lAddObjecttoCollection = .T.
+	lAddObjecttoCollection = .t.
 
-	* In the context of programming languages and compilers, 
-	* a token is a basic unit of code that the compiler or interpreter recognizes. 
-	* Tokens are generated during the lexical analysis phase of compilation.
-	* The lexical analyzer breaks the source code into a series of tokens
-	* Here the token could be a json object... 
-	* Token is model.users == make_model("users") 
-    PROCEDURE make(tvToken,tvSchema)
 
-		LOCAL loObject,;
+	* Usage model.users == make_model("users")
+	procedure make(tcName,tcClassName,tvParms,tlNewInstance)
+
+		local loObject,;
 			lcClass
-			
-		loObject = .NULL.
-	
-		DO CASE 
-			CASE VARTYPE(tvToken) = "C" 
-				IF tlNewInstance .OR. THIS.GETKEY(lower(tvToken)) = 0
-					loObject =  THIS.Create(tvToken,tvSchema)
-					IF VARTYPE(loObject)="O"
+
+		loObject = .null.
+
+		do case
+			case vartype(tcName) = "C"
+				if tlNewInstance .or. this.getkey(lower(tcName)) = 0
+					loObject =  this.create(tcName,tcClassName,tvParms)
+					if vartype(loObject)="O"
 						* Save the factory name to create new instance of the same model
-						IF THIS.lAddModeltoCollection .AND. !loModel.lUnPersistentModel
-							THIS.ADD(loObject,lower(tvToken))
-						ENDIF
-						RETURN loObject
-					ELSE
-						RETURN .NULL.
-					ENDIF
-				ELSE
-					loObject =  THIS.Create(tvToken,tvSchema)
-					RETURN loObject
-				ENDIF
+						if this.lAddObjecttoCollection .and. !loObject.lUnPersistentModel
+							this.add(loObject,lower(tcName))
+						endif
+						return loObject
+					else
+						return .null.
+					endif
+				else
+					loObject =  this.create(tcName,tcClassName,tvParms)
+					return loObject
+				endif
 
-		ENDCASE 
-		RETURN .Null.
+		endcase
+		return .null.
 
-	ENDPROC
+	endproc
 
-	PROCEDURE Create(tvToken,tvSchema)
-		*-* To do parse Json and return the object 
-		
-	ENDPROC
+	procedure create(tcName,tcClassName,tvParms)
+		*-* To do parse Json and return the object
+		if empty(tcClassName)
+			tcClassName = tcName
+		endif
+		if !empty(tvParms)
 
-ENDDEFINE
+			loObject = createobject(tcClassName,tvParms)
+
+		else
+
+			loObject = createobject(tcClassName)
+
+		endif
+		loObject.cName = tcName
+		return loObject
+	endproc
+
+enddefine
