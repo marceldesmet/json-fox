@@ -22,6 +22,7 @@ loJsonHandler = CREATEOBJECT("JsonHandler")
 
 * Serialize the object to JSON
 lcDataJson = loJsonHandler.serialize(loData)
+_cliptext = lcDataJson
 
 IF loJsonHandler.nError = JS_FATAL_ERROR
     ? "Error during serialization: " + loJsonHandler.cErrorMsg

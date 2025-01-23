@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.0.0.
+* Version 1.3.2
 
 lparameters tcRole,tvParm1,tvParm2,tvParm3
 
@@ -40,92 +40,16 @@ do case
 		on error do ErrorHandler with ;
 			.null., message( ), error(), program( ), lineno( )
 	case lower(tcRole) = "main"
-		do form classes\ui\jsonviewer
+		do form desk\jsonviewer
 		return
 	otherwise
 		return
 endcase
 
+** Application is defined in json_application but can subclass here 
+
 ************* Start your application here
-*-* Here we have specific project interface creation
-define class JsonHandler as jsApplication olepublic
-
-	cErrorMsg = ""
-	nError = 0
-	IsJsonLdObject = .f.
-	rdFoxprofix = "object_"
-	unicode = .f.
-
-	dimension dependencies[1,2]
-
-	function serialize(loObject,tlBeautify)
-		local loStringify, lcJson
-		loStringify = createobject("Stringify")
-		with loStringify
-			.IsJsonLdObject = this.IsJsonLdObject
-			.rdFoxprofix = this.rdFoxprofix
-			.unicode = this.unicode
-		endwith
-
-		lcJson = loStringify.stringify(loObject,tlBeautify)
-
-		if loStringify.nError = JS_FATAL_ERROR
-			this.cErrorMsg = loStringify.cErrorMsg
-			this.nError = JS_FATAL_ERROR
-			return .null.
-		endif
-
-		return lcJson
-	endfunc
-
-	function deserialize(lcJson)
-		local loParser, loObject
-
-		loParser = createobject("Parser")
-		with loParser
-			.IsJsonLdObject = this.IsJsonLdObject
-			.rdFoxprofix = this.rdFoxprofix
-			.unicode = this.unicode
-		endwith
-
-		loObject = loParser.parseJson(lcJson)
-
-		if loParser.nError = JS_FATAL_ERROR
-			this.cErrorMsg = loParser.cErrorMsg
-			this.nError = JS_FATAL_ERROR
-			return .null.
-		endif
-
-		return loObject
-	endfunc
-
-	function GetDependencies
-		return @this.dependencies
-	endfunc
-
-	function Initialize_MVC()
-
-		release oFactory
-		public oFactory
-		oFactory = createobject("jsfactory")
-
-	endfunc
-
-	function dumpTokensToFile(toTokens,tcDumpFile)
-		local loTokenizer
-		loTokenizer =createobject("tokenizer")
-		loTokenizer.dumpTokensToFile(toTokens,tcDumpFile)
-	endfunc
-
-	function FormatJson(tcJson)
-		local loJson
-		loJson = this.deSerialize(tcJson)
-		tcFormattedJson = this.Serialize(loJson,.t.)
-		return tcFormattedJson
-	endfunc
-
-enddefine
-
+* Here we have specific project interface creation
 define class dependencies as custom
 
 	function load_librarys
@@ -150,12 +74,15 @@ define class dependencies as custom
 		loFiles.add('classes\json\json_Parser.prg')
 		loFiles.add('classes\json\json_Stringify.prg')
 		loFiles.add('classes\json\json_translateunicode.prg')
+		loFiles.add('classes\json\json_application.prg')
 
 		loFiles.add('classes\tools\jstools_distribution.prg')
+		loFiles.add('classes\tools\jsweb_utils.prg')
+		
 
 		* Add for debug purpose local main
 		if tlAddLocalMain
-			loFiles.add('main.prg')
+			loFiles.add('json_main.prg')
 		endif
 
 		return loFiles
@@ -163,7 +90,6 @@ define class dependencies as custom
 	endfunc
 
 	function TestProg(tvParm1,tvParm2,tvParm3)
-
 
 		do classes\src_test\test_Tokenizer.prg
 		do classes\src_test\test_Stringify.prg

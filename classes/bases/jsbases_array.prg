@@ -5,11 +5,8 @@ define class jsArray as jscustom
 
 	name = "jsArray"
 
-	IsColumnData	= .f.
-
 	dimension item[1,1]
 	item[1,1] = .f.
-
 
 	nRow = 1
 	nCol = 1
@@ -114,7 +111,6 @@ define class jsArray as jscustom
 enddefine
 
 define class jsdata as jsParseArray
-	hidden IsColumnData
 	hidden add
 	
 	hidden push
@@ -134,11 +130,9 @@ define class jsParseArray as jsArray
 
 	* exposed property
 	dimension item[1,1]
-	IsColumnData = .f.
 
 	protected push
 	protected nRow
-	protected nCol
 	protected aPushLevel
 
 	* hidden properties

@@ -253,10 +253,10 @@ define class Tokenizer as jscustom
 			endif
 			lcOutput = lcOutput + " - " + transform(lni) + ":" + lcToken  + iif(llNelwLine,chr(10),"*")
 		endfor
-		if vartype(tcDumpFile) = T_CHARACTER
+		if vartype(tcDumpFile) = T_CHARACTER .and. !empty(tcDumpFile)
 			strtofile(lcOutput, tcDumpfile)
 		else
-			strtofile(lcOutput, "token-content.txt")
+			return lcOutput
 		endif
 		return .t.
 	endfunc

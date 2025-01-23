@@ -21,6 +21,7 @@ FXUResults.*
 #       pages with code in web folders remove following line
 web/**/*.prg
 
+distrib/**/*.*
 
 #Web Connection
 wwrequestlog.*

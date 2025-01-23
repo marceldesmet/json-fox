@@ -7,10 +7,11 @@ define class Parser as jscustom
 	tokens = .null.
 	currentIndex = 0
 	name = "Parser"
-	unicode  = .f. 			&& Set to .T. to decode Unicode escape sequences in the parsed object
-	IsJsonLdObject = .f.    && Handle JSON-LD objects with @context and @type properties
-	rdFoxprofix = "object_"	&& Prefix Json object for FoxPro object properties with "rd_"
-	HandleComments = .f. 	&& Set to .T. to remove comments from the JSON string
+	unicode  = .f. 				&& Set to .T. to decode Unicode escape sequences in the parsed object
+	IsJsonLdObject = .f.    	&& Handle JSON-LD objects with @context and @type properties
+	rdFoxprofix = "object_"		&& Prefix Json object for FoxPro object properties with "rd_"
+	HandleComments = .f. 		&& Set to .T. to remove comments from the JSON string
+	lIs2DArray = .f.			&& Set to .T. to parse a 2D array
 
 	function parseJson(tcInput)
 
@@ -127,10 +128,11 @@ define class Parser as jscustom
 				case lcToken == JS_LBRACE
 					lvValue = this.parseObject()
 				case lcToken == JS_LBRACKET       && Not == top include 2D array
-					lvValue = this.parseArray()
+					lvValue = this.parseArray(.null.)
 					llIsArray = .t.				  && force to recopy the array to a jsdata object class
 				case lcToken == JS_LBRACKET_2DIM
-					lvValue = this.parseArray(.null., .t.)  && .t. for 2D array
+					THIS.lIs2DArray = .T.
+					lvValue = this.parseArray(.null.)  && .t. for 2D array
 					llIsArray = .t.				 && force to recopy the array to a jsdata object class
 				otherwise
 					* Value of the property is not a array or object we now expect a valuetype
@@ -206,12 +208,12 @@ define class Parser as jscustom
 		endif
 	endfunc
 
-	function parseArray(loArray, tlIs2DArray)
+	function parseArray(loArray)
 
 		* #TODO Implement support native VFP arrays and multi-dimensional arrays
 		* Track the array level for error checking
 
-		local loArray, lcToken, lvValue, llIs2DArray
+		local loArray, lcToken, lvValue, llIs2DArray,lnCols
 
 		lcToken = this.tokens.item(this.currentIndex)
 
@@ -222,14 +224,11 @@ define class Parser as jscustom
 
 		if vartype(loArray) <> "O"
 			* Create an empty array object
+			* Default array dimension is  a[1,1]
 			loArray = createobject("jsParseArray")
-			loArray.IsColumnData = .f.
-			* nCol = 1 by design
-		else
-			* We have a array object
-			* so we need de redimension it
-			loArray.IsColumnData = .t.
+			lnCols = 0
 		endif
+
 		* Check for empty array
 		if this.tokens.item(this.currentIndex+1) == JS_RBRACKET
 			this.currentIndex = this.currentIndex + 2  && Skip '[' and ']'
@@ -248,6 +247,10 @@ define class Parser as jscustom
 				case lcToken == JS_LBRACE
 					lvValue = this.parseObject()
 				case lcToken == JS_LBRACKET
+					IF VARTYPE(lnCols) = "N" .AND. THIS.lIs2DArray = .T.
+						lnCols = lnCols + 1
+						loArray.nCol = lnCols 
+					endif 
 					this.parseArray(@loArray)
 				otherwise
 					this.currentIndex = this.currentIndex + 1  && ready  to get the value
@@ -285,6 +288,8 @@ define class Parser as jscustom
 				* Here we have reached the end of the array
 				if this.tokens.item(this.currentIndex) != JS_RBRACKET
 					SetError(this,"Expected a ']' at current index " + transform(this.currentIndex),JS_FATAL_ERROR)
+				else 
+					* We have reached the end of the array
 				endif
 			endif
 
@@ -295,16 +300,9 @@ define class Parser as jscustom
 		if this.tokens.item(this.currentIndex) == JS_RBRACKET
 			* This is the end of the add of colums
 			* Array is ready to be returned
-			loArray.IsColumnData = .f.
-		endif
-
-		if loArray.IsColumnData
-			* We have a column data of a 2D array
-			loArray.nCol = loArray.nCol + 1
 		endif
 
 		return loArray
-
 
 	endfunc
 

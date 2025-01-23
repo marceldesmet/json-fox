@@ -18,11 +18,11 @@ define class Stringify as jscustom
 	* or a single value (such as a string, number, boolean, or null).
 	* However, in most practical use cases, JSON data is typically structured as an object or an array
 	* to represent more complex data.
-	* In JSON, when serializing objects, each value is associated with a key. 
-	* However, when serializing arrays or single values, there are no keys associated with the values. 
+	* In JSON, when serializing objects, each value is associated with a key.
+	* However, when serializing arrays or single values, there are no keys associated with the values.
 	* The StringifyValue function should handle these cases appropriately.
-	* To handle indentation correctly, we need to ensure that the indentation level is properly managed 
-	* throughout the Stringify process. 
+	* To handle indentation correctly, we need to ensure that the indentation level is properly managed
+	* throughout the Stringify process.
 	* Specifically, you should decrease the indentation level after Stringify nested structures and before closing braces or brackets.
 
 
@@ -53,7 +53,7 @@ define class Stringify as jscustom
 			case vartype(tvValue) = "C"
 				* We add quotes to format strings data
 				if this.unicode
-					lcJsonValue = ["] + alltrim(this.escapeString(tvValue)) + ["] 
+					lcJsonValue = ["] + alltrim(this.escapeString(tvValue)) + ["]
 				else
 					lcJsonValue = ["] + alltrim(tvValue) + ["]
 				endif
@@ -87,8 +87,8 @@ define class Stringify as jscustom
 	endfunc
 
 	function GetIndent()
-		if THIS.nIndentLevel > 0
-			lcIndent = replicate(this.cIndentStep, THIS.nIndentLevel)
+		if this.nIndentLevel > 0
+			lcIndent = replicate(this.cIndentStep, this.nIndentLevel)
 		else
 			lcIndent = ""
 		endif
@@ -106,7 +106,7 @@ define class Stringify as jscustom
 
 		* Object start with an "{"
 		lcJson = "{" + this.cNewLine
-		THIS.nIndentLevel = THIS.nIndentLevel+1
+		this.nIndentLevel = this.nIndentLevel+1
 		if pemstatus(loObject,"BaseClass",5) and loObject.baseclass = "Collection"
 			* Object collection
 			lcJson = lcJson + this.stringifyCollection(loObject)
@@ -116,26 +116,36 @@ define class Stringify as jscustom
 		endif
 		* Object end with an "}"
 		lcJson = lcJson + lcIndent + "}"
-		THIS.nIndentLevel = THIS.nIndentLevel-1
-		
+		this.nIndentLevel = this.nIndentLevel-1
+
 		return lcJson
 	endfunc
 
 	function stringifyObjectMembers(toObject)
 
-		local lnI,lcJson,laMembers,lcIndent 
+		local lnI,lcJson,laMembers,lcIndent,lcKeyname
 		lcJson = ""
-		DIMENSION lamembers[1]
+		dimension lamembers[1]
 		lcIndent = this.GetIndent()
 
 		* "+GU" loop for "U"ser properties and("+") only "G"lobal ( public )
 		amembers(laMembers, toObject, 1, "+GU")
-		
+
 		* A members has 2 columns first is the name
-		for lnI = 1 to ALEN(laMembers,1)
+		for lnI = 1 to alen(laMembers,1)
 			lcKey = lower(laMembers[lnI, 1])
-			lcJson = lcJson + lcIndent + ["] + lcKey + [":] + this.StringifyValue(toObject.&lcKey)
-			if lnI <  ALEN(laMembers,1)
+			if this.IsJsonLdObject
+				* Check if the key is formatted as this.rdFoxprofix + "context" or this.rdFoxprofix + "type" etc..
+				if left(lcKey, len(this.rdFoxprofix)) = this.rdFoxprofix
+					lcKeyname = "@" + substr(lcKey, len(this.rdFoxprofix) + 1)
+				else
+					lcKeyname = lckey
+				endif
+			else
+				lcKeyname = lckey
+			endif
+			lcJson = lcJson + lcIndent + ["] + lcKeyname + [":] + this.StringifyValue(toObject.&lcKey)
+			if lnI <  alen(laMembers,1)
 				lcJson = lcJson + ","
 			endif
 			lcJson = lcJson + this.cNewLine
@@ -174,11 +184,11 @@ define class Stringify as jscustom
 		endif
 
 		lcIndent = this.GetIndent()
-		IF !EMPTY(tcKey)
+		if !empty(tcKey)
 			tcKey = '"' + tcKey + '":'
-		ELSE
+		else
 			tcKey = ""
-		ENDIF
+		endif
 		lcJson = tcKEy + "[" + this.cNewLine
 		lnRows = alen(toArray.item, 1)
 		lnCols = alen(toArray.item, 2)
@@ -197,7 +207,7 @@ define class Stringify as jscustom
 			endif
 			for lnII = 1 to lnRows
 				lvValue = toArray.item[lnII, lnI]
-				lcJson = lcJson + lcIndent + this.cIndentStep + this.StringifyValue(lvValue) 
+				lcJson = lcJson + lcIndent + this.cIndentStep + this.StringifyValue(lvValue)
 				if lnII < lnRows
 					lcJson = lcJson + "," + this.cNewLine
 				endif
@@ -207,9 +217,9 @@ define class Stringify as jscustom
 				lcJson = lcJson + "," + this.cNewLine
 			endif
 		endfor
-		IF lnCols > 1
+		if lnCols > 1
 			lcJson = lcJson + this.cNewLine + lcIndent + "]"
-		ENDIF 
+		endif
 		return lcJson
 	endfunc
 
@@ -278,8 +288,8 @@ define class Stringify as jscustom
 	endfunc
 
 	function todolater
-		
-		If this.isunicode
+
+		if this.isunicode
 			* We add quotes to format strings data
 			lcJsonValue = '"' + alltrim(this.escapeString(tvValue)) + '"'
 		else
@@ -301,7 +311,7 @@ define class Stringify as jscustom
 
 			lcValue = evaluate("toObject." + lcKey)
 		endif
-	endfunc 
-			
+	endfunc
+
 
 enddefine

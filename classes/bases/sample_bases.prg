@@ -41,14 +41,6 @@ return
 
 ************* Start your application here
 
-define class JsonHandler as jsApplication olepublic
-
-	cConfig = "HtmlDataConfig"
-	cMsg	= "LogMessages"
-	ldebugmode = .t.
-
-enddefine
-
 define class jsdependencies as custom
 
 	function load_librarys

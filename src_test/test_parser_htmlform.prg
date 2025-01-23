@@ -10,7 +10,7 @@ loJsonHandler = CREATEOBJECT("JsonHandler")
 lcFormJson =  FILETOSTR("C:/Webconnectionprojects/WebNode/devtools/json-fox/json-samples/MyHtmlForm.json") 
 
 loFormObject = loParser.ParseJson(lcFormJson)
-SET STEP ON 
+
 IF VARTYPE(loFormObject) <> "O" 
 	? "Last parser error message " + loParser.cErrorMsg
 	loObject = loTokenizer.tokenize(lcTypeJson)

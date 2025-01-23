@@ -14,9 +14,9 @@ define class jsmessageQueue as jsCollection
 	* Not implemented yet
 	* #TODO With observer pattern
 	function Distribute(tcCategory, toSubject)
-		local i, loMessage
-		for i = 1 to this.count
-			loMessage = this.item(i)
+		local lnI, loMessage
+		for lnI = 1 to this.count
+			loMessage = this.item(lnI)
 			if loMessage.category = tcCategory
 				toSubject.NotifyObservers(loMessage.message)
 			endif
@@ -29,11 +29,11 @@ define class jsmessageQueue as jsCollection
 			dodefault()
 			return
 		endif
-		local i, loMessage
-		for i = this.count to 1 step -1
-			loMessage = this.item(i)
+		local lnI, loMessage
+		for lnI = this.count to 1 step -1
+			loMessage = this.item(lnI)
 			if loMessage.category = tcCategory
-				this.remove(i)
+				this.remove(lnI)
 			endif
 		endfor
 	endfunc
@@ -44,7 +44,7 @@ define class jsmessageQueue as jsCollection
 		tcCategory = iif(vartype(tcCategory) = "C", tcCategory, "")
 		lcmessages = ""
 		for lnI = 1 to this.count
-			lvMessage = this.item(i)
+			lvMessage = this.item(lnI)
 			DO CASE 
 				case  vartype(lvMessage) = "O"
 					loMessage = lvMessage
