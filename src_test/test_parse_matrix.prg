@@ -1,5 +1,5 @@
 #INCLUDE json-fox.h
-Do main with "loaddep"
+Do json_main with "loaddep"
 CLEAR
 
 *-* SET COVERAGE TO C:/Webconnectionprojects/WebNode/devtools/json-fox/classes/jsonfox.log

@@ -1,5 +1,5 @@
 #INCLUDE json-fox.h
-Do main with "loaddep"
+Do json_main with "loaddep"
 CLEAR
 
 * IN debug mode we have a set step on 

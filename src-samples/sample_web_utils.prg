@@ -1,5 +1,5 @@
 #INCLUDE json-fox.h
-Do main with "loaddep"
+Do json_main with "loaddep"
 CLEAR
 * Example usage of ParseUrl function
 LOCAL loWebUtils, loUrlParts, lcUrl
@@ -20,3 +20,7 @@ loUrlParts = loWebUtils.ParseUrl(lcUrl)
 ? "Path: " + loUrlParts.Path
 ? "QueryString: " + loUrlParts.QueryString
 ? "Fragment: " + loUrlParts.Fragment
+
+loWebUtils.oUrlParts.Protocol = "http"
+
+? loUrlParts.StringifyUrl()

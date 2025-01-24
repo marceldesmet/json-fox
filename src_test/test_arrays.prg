@@ -1,4 +1,4 @@
-Do main with "loaddep"
+Do json_main with "loaddep"
 CLEAR 
 LOCAL oArray 
 
