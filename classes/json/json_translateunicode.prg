@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.2
+* Version 1.3.4
 
 define class JsonTranslateUnicode as jsCustom
 

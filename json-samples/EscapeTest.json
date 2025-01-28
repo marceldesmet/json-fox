@@ -1,0 +1,21 @@
+{
+    "stringWithQuotes": "He said, \"Hello, World!\"",
+    "stringWithBackslash": "This is a backslash: \\",
+    "stringWithNewline": "This string contains a newline character.\nSee?",
+    "stringWithTab": "This string contains a tab character.\tSee?",
+    "stringWithUnicode": "This string contains a Unicode character: \u263A",
+    "nestedObject": {
+        "nestedStringWithQuotes": "She replied, \"Hi!\"",
+        "nestedStringWithBackslash": "Another backslash: \\",
+        "nestedStringWithNewline": "Another newline character.\nHere it is.",
+        "nestedStringWithTab": "Another tab character.\tHere it is.",
+        "nestedStringWithUnicode": "Another Unicode character: \u2764"
+    },
+    "arrayWithEscapes": [
+        "Item with \"quotes\"",
+        "Item with backslash \\",
+        "Item with newline \n",
+        "Item with tab \t",
+        "Item with Unicode \u2605"
+    ]
+}

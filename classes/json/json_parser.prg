@@ -1,13 +1,13 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.2
+* Version 1.3.4
 * ResetError(THIS) is a function THIS.ResetError() is osolete
 
 define class Parser as jscustom
 	tokens = .null.
 	currentIndex = 0
 	name = "Parser"
-	unicode  = .f. 				&& Set to .T. to decode Unicode escape sequences in the parsed object
+	convertunicode  = .f. 				&& Set to .T. to decode Unicode escape sequences in the parsed object
 	IsJsonLdObject = .f.    	&& Handle JSON-LD objects with @context and @type properties
 	rdFoxprofix = "object_"		&& Prefix Json object for FoxPro object properties with "rd_"
 	HandleComments = .f. 		&& Set to .T. to remove comments from the JSON string
@@ -43,6 +43,7 @@ define class Parser as jscustom
 
 
 		loTokenizer = createobject("Tokenizer")
+		loTokenizer.convertunicode = this.convertunicode
 		this.tokens = loTokenizer.tokenize(tcInput)
 
 		if loTokenizer.nError = JS_FATAL_ERROR .or. vartype(this.tokens) <> T_OBJECT
@@ -63,12 +64,6 @@ define class Parser as jscustom
 		if this.nError = JS_FATAL_ERROR
 			SetError(this,this.cerrormsg,JS_FATAL_ERROR)
 			return .null.
-		endif
-
-		* Decode Unicode escape sequences in the parsed object
-		if this.unicode = .t.
-			loUnicodeObject = createobject("JsonTranslateUnicode")
-			loObject = loUnicodeObject.DecodeUnicodeInObject(loObject)
 		endif
 
 		set date to &lcSavedDateSetValue.
@@ -422,5 +417,6 @@ define class Parser as jscustom
 		endfor
 		return .f.
 	endfunc
+
 
 enddefine

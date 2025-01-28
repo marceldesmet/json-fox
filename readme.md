@@ -22,6 +22,8 @@ object, array, date, string, number, boolean, or null.
 - **JSON-LD Support**: JSON-LD (JavaScript Object Notation for Linked Data) support for encoding linked data using JSON.
 @ is converted to a property content starting with rdFoxprofix = "object_"
 - **2D arrays**: Support for two-dimensional arrays, allowing for more complex data structures.
+- **Unicode esc support**: Support parsing and stringify \uXXXX characters  
+- **Esc support**: 	'\"', "\",  "\\", "\/","\b","\f","\n","\r","\t"
 
 ## Installation
 
@@ -100,8 +102,4 @@ Jsonviewer VFP form
 
 ### License
 
-This project is licensed under the MIT License by Marcel Desmet and Audielec S.A.
-
-### Disclaimer
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+This project is licensed under the MIT License.

@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.2
+* Version 1.3.4
 
 * This component breaks the input JSON string into tokens.
 * Each token represents a meaningful string element
@@ -26,6 +26,7 @@ define class Tokenizer as jscustom
 	tokens = .null.
 	currentIndex = 0
 	name = "Tokenizer"
+	convertunicode = .f.
 
 	function tokenize(tcInput)
 
@@ -126,6 +127,16 @@ define class Tokenizer as jscustom
 						rcValue = rcValue + chr(8)
 					case lcInCurrentChar == "f"
 						rcValue = rcValue + chr(10)
+					case lcInCurrentChar == "u"
+						IF This.convertunicode
+							* Handle Unicode escape sequence
+							LOCAL lcUnicodeHex, lnUnicodeChar
+							lcUnicodeHex = SUBSTR(tcInput, rni + 1, 4)
+							* lnUnicodeChar = EVALUATE("0x" + lcUnicodeHex)
+							* rcValue = rcValue + STRCONV(BINTOC(lnUnicodeChar, "4RS"), 6)
+							rcValue = rcValue + "0x" + lcUnicodeHex	
+							rni = rni + 4
+						endif 
 					otherwise
 						rcValue = rcValue + lcInCurrentChar
 				endcase

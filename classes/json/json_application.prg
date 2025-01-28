@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.2
+* Version 1.3.4
 
 define class JsonHandler as jsApplication olepublic
 
@@ -10,7 +10,7 @@ define class JsonHandler as jsApplication olepublic
 	nError = 0
 	IsJsonLdObject = .f.
 	rdFoxprofix = "object_"
-	unicode = .f.
+	convertunicode  = .f.
 
 	dimension dependencies[1,2]
 
@@ -40,7 +40,7 @@ define class JsonHandler as jsApplication olepublic
 		with loStringify
 			.IsJsonLdObject = this.IsJsonLdObject
 			.rdFoxprofix = this.rdFoxprofix
-			.unicode = this.unicode
+			.convertunicode  = this.convertunicode 
 		endwith
 
 		lcJson = loStringify.stringify(loObject,tlBeautify)
@@ -62,7 +62,7 @@ define class JsonHandler as jsApplication olepublic
 		with loParser
 			.IsJsonLdObject = this.IsJsonLdObject
 			.rdFoxprofix = this.rdFoxprofix
-			.unicode = this.unicode
+			.convertunicode  = this.convertunicode 
 		endwith
 
 		loObject = loParser.parseJson(lcJson)

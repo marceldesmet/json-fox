@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.2
+* Version 1.3.4
 
 lparameters tcRole,tvParm1,tvParm2,tvParm3
 

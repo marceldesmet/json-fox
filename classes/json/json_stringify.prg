@@ -1,12 +1,12 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.2
+* Version 1.3.4
 
 define class Stringify as jscustom
 	tokens = .null.
 	currentIndex = 0
 	name = "Stringify"
-	unicode  = .f.
+	convertunicode   = .f.
 	IsJsonLdObject = .f.    			&& Handle JSON-LD objects with @context and @type properties
 	rdFoxprofix = "object_"				&& Prefix Json object for FoxPro object properties with "rd_"
 	lAddEmptyTimeZoneTDate = .f.      	&& Add empty time zone to TDate values
@@ -24,7 +24,6 @@ define class Stringify as jscustom
 	* To handle indentation correctly, we need to ensure that the indentation level is properly managed
 	* throughout the Stringify process.
 	* Specifically, you should decrease the indentation level after Stringify nested structures and before closing braces or brackets.
-
 
 	function Stringify(lvValue, tlBeautify)
 		local lcJson,lcSavedDateSetValue,lcSavedHoursSetValue
@@ -52,7 +51,7 @@ define class Stringify as jscustom
 		do case
 			case vartype(tvValue) = "C"
 				* We add quotes to format strings data
-				if this.unicode
+				if this.convertunicode 
 					lcJsonValue = ["] + alltrim(this.escapeString(tvValue)) + ["]
 				else
 					lcJsonValue = ["] + alltrim(tvValue) + ["]
@@ -229,26 +228,34 @@ define class Stringify as jscustom
 		lcEscaped = ""
 		for lnPos = 1 to len(tcValue)
 			lcChar = substr(tcValue, lnPos, 1)
+			lcNextChar = substr(tcValue, lnPos+1, 1)
 			lnCharCode = asc(lcChar)
 			do case
-				case lnCharCode < 32 .or. lnCharCode > 126
-					lcEscaped = lcEscaped + "\u" + padl(transform(lnCharCode, "@0"), 4, "0")
 				case lcChar = '"'
 					lcEscaped = lcEscaped + '\"'
 				case lcChar = "\"
 					lcEscaped = lcEscaped + "\\"
 				case lcChar = "/"
 					lcEscaped = lcEscaped + "\/"
-				case lcChar = chr(8)
+				case lnCharCode = 8
 					lcEscaped = lcEscaped + "\b"
-				case lcChar = chr(12)
+				case lnCharCode = 12
 					lcEscaped = lcEscaped + "\f"
-				case lcChar = chr(10)
+				case lnCharCode = 10
 					lcEscaped = lcEscaped + "\n"
-				case lcChar = chr(13)
+				case lnCharCode = 13
 					lcEscaped = lcEscaped + "\r"
-				case lcChar = chr(9)
+				case lnCharCode = 9
 					lcEscaped = lcEscaped + "\t"
+*				case lnCharCode < 32 .or. lnCharCode > 126
+					* Put on the end of do case le let priority to \b \f etc ... 
+					* Handle Unicode escape sequence for characters outside the ASCII range
+					* We use the \uXXXX format to represent Unicode characters
+					* where XXXX is the hexadecimal representation of the character code
+*					lcEscaped = lcEscaped + "\u" + RIGHT(TRANSFORM(lnCharCode, "@0"),4)
+				CASE lcChar + lcNextChar == "0x"
+					lcEscaped = lcEscaped + "\u" + substr(tcValue, lnPos+2, 4)
+					lnPos = lnPos + 5
 				otherwise
 					lcEscaped = lcEscaped + lcChar
 			endcase
