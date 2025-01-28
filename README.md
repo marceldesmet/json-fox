@@ -22,6 +22,8 @@ object, array, date, string, number, boolean, or null.
 - **JSON-LD Support**: JSON-LD (JavaScript Object Notation for Linked Data) support for encoding linked data using JSON.
 @ is converted to a property content starting with rdFoxprofix = "object_"
 - **2D arrays**: Support for two-dimensional arrays, allowing for more complex data structures.
+- **Esc unicode support**: Support parsing and stringify \uXXXX characters  
+- **Esc support**: 	'\"', "\",  "\\", "\/","\b","\f","\n","\r","\t"
 
 ## Installation
 
