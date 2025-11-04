@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.4
+* Version 1.3.5
 
 * This component breaks the input JSON string into tokens.
 * Each token represents a meaningful string element
@@ -110,7 +110,7 @@ define class Tokenizer as jscustom
 		rni = rni + 1
 		lcCurrentChar = substr(tcInput, rni, 1)
 		do while lcCurrentChar != '"' and rni <= len(tcInput)
-			if lcCurrentChar == '\'
+			if lcCurrentChar == CHR(92)
 				* Handle escape character
 				rni = rni + 1
 				* Can use lcCurrentChar because next token could be equal to "
@@ -173,7 +173,7 @@ define class Tokenizer as jscustom
 	endfunc
 
 	function isNumeric(char, tcInput, rnI, rcValue)
-		if isdigit(char)
+		if isdigit(char) OR char == '-'
 			local lcNumber, lcNextChar
 			lcNumber = ""
 			do while rnI <= len(tcInput) and (isdigit(substr(tcInput, rnI, 1)) or substr(tcInput, rnI, 1) == '.' or substr(tcInput, rnI, 1) == '-')
