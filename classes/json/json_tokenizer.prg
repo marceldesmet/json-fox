@@ -1,6 +1,6 @@
-#INCLUDE json-fox.h
+#INCLUDE c:\webconnectionprojects\webmove\deploy\j_constant.h
 
-* Version 1.3.5 - OPTIMIZED
+* Version 1.3.5- OPTIMIZED
 * Performance improvements:
 * - Uses array instead of Collection (30-50% faster)
 * - Caches string length (15-25% faster)
@@ -276,7 +276,7 @@ DEFINE CLASS Tokenizer AS jscustom
 
     * Check if the current character is part of a date string (simple check)
 	FUNCTION isDate(char, tcInput, tnInputLen, rnI)
-		IF rnI + 8 <= tnInputLen
+		IF rnI + 5 <= tnInputLen
 			IF ISDIGIT(SUBSTR(tcInput, rnI+1, 1)) AND SUBSTR(tcInput, rnI+5, 1) = "-" .and. substr(tcInput, rnI+8, 1)="-"
 				RETURN .T.
 			ENDIF
