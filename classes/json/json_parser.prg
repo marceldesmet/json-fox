@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.4
+* Version 1.3.5
 * ResetError(THIS) is a function THIS.ResetError() is osolete
 
 define class Parser as jscustom
@@ -8,10 +8,13 @@ define class Parser as jscustom
 	currentIndex = 0
 	name = "Parser"
 	convertunicode  = .f. 				&& Set to .T. to decode Unicode escape sequences in the parsed object
-	IsJsonLdObject = .f.    	&& Handle JSON-LD objects with @context and @type properties
-	rdFoxprofix = "object_"		&& Prefix Json object for FoxPro object properties with "rd_"
-	HandleComments = .f. 		&& Set to .T. to remove comments from the JSON string
-	lIs2DArray = .f.			&& Set to .T. to parse a 2D array
+	IsJsonLdObject = .f.    			&& Handle JSON-LD objects with @context and @type properties
+	rdFoxprofix = "object_"				&& Prefix Json object for FoxPro object properties with "rd_"
+	HandleComments = .f. 				&& Set to .T. to remove comments from the JSON string
+	lIs2DArray = .f.					&& Set to .T. to parse a 2D array
+	
+	MakeObjectCursor = .f.		    	&& Set to .T. to add the parsed object to a cursor
+	cCursorName = "JsonObjectCursor"
 
 	function parseJson(tcInput)
 
@@ -159,16 +162,22 @@ define class Parser as jscustom
 
 			endcase
 
-			* Add the property and value to the object
-			if this.IsJsonLdObject
-				this.HandleJsonLDobject(@loObject, lcProperty, lvValue)
-			else
-				if llIsArray
-					this.AddArray(@loObject, lcProperty, @lvValue)
+			if this.MakeObjectCursor 
+
+				this.AddObjectToCursor(lcProperty, @lvValue,llIsArray)
+
+			else 
+				* Add the property and value to the object
+				if this.IsJsonLdObject
+					this.HandleJsonLDobject(@loObject, lcProperty, lvValue)
 				else
-					addproperty(loObject, lcProperty, lvValue)
+					if llIsArray
+						this.AddArray(@loObject, lcProperty, @lvValue)
+					else
+						addproperty(loObject, lcProperty, lvValue)
+					endif
 				endif
-			endif
+			endif 
 
 			lcToken = this.tokens.item(this.currentIndex)
 
@@ -417,6 +426,43 @@ define class Parser as jscustom
 		endfor
 		return .f.
 	endfunc
+
+	
+	FUNCTION AddObjectToCursor(lcProperty, rvValue, llIsArray)
+		LOCAL lcCursorName, lcPropertyValue
+	
+		* Define the cursor name
+		lcCursorName = THIS.cCursorName
+	
+		* Check if the cursor already exists, if not, create it
+		IF NOT USED(lcCursorName)
+			CREATE CURSOR (lcCursorName) (cProperty C(50), mMemo M)
+		ENDIF
+	
+		* Convert the value to a string representation
+		DO CASE
+			CASE TYPE("rvValue") == "C"
+				lcPropertyValue = rvValue
+			CASE TYPE("rvValue") == "N"
+				lcPropertyValue = TRANSFORM(rvValue)
+			CASE TYPE("rvValue") == "L"
+				lcPropertyValue = IIF(rvValue, "true", "false")
+			CASE TYPE("rvValue") == "D"
+				lcPropertyValue = DTOC(rvValue)
+			CASE TYPE("rvValue") == "T"
+				lcPropertyValue = TTOC(rvValue)
+			CASE TYPE("rvValue") == "O"
+				lcPropertyValue = "Object"
+			CASE llIsArray
+				lcPropertyValue = rvValue.ArrayToText()
+			OTHERWISE
+				lcPropertyValue = "Unknown"
+		ENDCASE
+	
+		* Insert the property and value into the cursor
+		INSERT INTO (lcCursorName) (cProperty, mMemo) VALUES (lcProperty, lcPropertyValue)
+	
+	ENDFUNC
 
 
 enddefine
