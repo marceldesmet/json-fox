@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.4
+* Version 1.3.5
 define class jsArray as jscustom
 
 	name = "jsArray"
@@ -107,6 +107,27 @@ define class jsArray as jscustom
 			this.nCol = tnCol
 		endif
 	endproc
+
+	* Method to convert array to text
+	FUNCTION ArrayToText()
+		LOCAL lcText, lnRows, lnCols, lnI, lnII, lcRow
+		lcText = ""
+		lnRows = ALEN(this.item, 1)
+		lnCols = ALEN(this.item, 2)
+
+		FOR lnI = 1 TO lnRows
+			lcRow = ""
+			FOR lnII = 1 TO lnCols
+				lcRow = lcRow + TRANSFORM(this.item[lnI, lnII])
+				IF lnII < lnCols
+					lcRow = lcRow + ","
+				ENDIF
+			ENDFOR
+			lcText = lcText + lcRow + CRLF 
+		ENDFOR
+
+		RETURN lcText
+	ENDFUNC
 
 enddefine
 
