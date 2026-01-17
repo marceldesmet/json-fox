@@ -1,6 +1,6 @@
 #INCLUDE json-fox.h
 
-* Version 1.3.4
+* Version 1.3.5
 
 define class Stringify as jscustom
 	tokens = .null.
@@ -50,12 +50,8 @@ define class Stringify as jscustom
 		local lcJsonValue
 		do case
 			case vartype(tvValue) = "C"
-				* We add quotes to format strings data
-				if this.convertunicode 
-					lcJsonValue = ["] + alltrim(this.escapeString(tvValue)) + ["]
-				else
-					lcJsonValue = ["] + alltrim(tvValue) + ["]
-				endif
+				* Always escape special characters for valid JSON
+				lcJsonValue = ["] + alltrim(this.escapeString(tvValue)) + ["]
 			case inlist(vartype(tvValue),"N","I")
 				lcJsonValue = transform(tvValue)
 			case vartype(tvValue) == "Q"
@@ -232,29 +228,37 @@ define class Stringify as jscustom
 			lnCharCode = asc(lcChar)
 			do case
 				case lcChar = '"'
-					lcEscaped = lcEscaped + '\"'
-				case lcChar = "\"
-					lcEscaped = lcEscaped + "\\"
+					* Escape double quote
+					lcEscaped = lcEscaped + CHR(92) + '"'
+				case lnCharCode = 92
+					* Escape backslash (CHR(92) = \)
+					lcEscaped = lcEscaped + CHR(92) + CHR(92)
 				case lcChar = "/"
-					lcEscaped = lcEscaped + "\/"
+					* Escape forward slash
+					lcEscaped = lcEscaped + CHR(92) + "/"
 				case lnCharCode = 8
-					lcEscaped = lcEscaped + "\b"
+					* Backspace
+					lcEscaped = lcEscaped + CHR(92) + "b"
 				case lnCharCode = 12
-					lcEscaped = lcEscaped + "\f"
+					* Form feed
+					lcEscaped = lcEscaped + CHR(92) + "f"
 				case lnCharCode = 10
-					lcEscaped = lcEscaped + "\n"
+					* Newline
+					lcEscaped = lcEscaped + CHR(92) + "n"
 				case lnCharCode = 13
-					lcEscaped = lcEscaped + "\r"
+					* Carriage return
+					lcEscaped = lcEscaped + CHR(92) + "r"
 				case lnCharCode = 9
-					lcEscaped = lcEscaped + "\t"
+					* Tab
+					lcEscaped = lcEscaped + CHR(92) + "t"
 *				case lnCharCode < 32 .or. lnCharCode > 126
 					* Put on the end of do case le let priority to \b \f etc ... 
 					* Handle Unicode escape sequence for characters outside the ASCII range
 					* We use the \uXXXX format to represent Unicode characters
 					* where XXXX is the hexadecimal representation of the character code
-*					lcEscaped = lcEscaped + "\u" + RIGHT(TRANSFORM(lnCharCode, "@0"),4)
+*					lcEscaped = lcEscaped + CHR(92) + "u" + RIGHT(TRANSFORM(lnCharCode, "@0"),4)
 				CASE lcChar + lcNextChar == "0x"
-					lcEscaped = lcEscaped + "\u" + substr(tcValue, lnPos+2, 4)
+					lcEscaped = lcEscaped + CHR(92) + "u" + substr(tcValue, lnPos+2, 4)
 					lnPos = lnPos + 5
 				otherwise
 					lcEscaped = lcEscaped + lcChar

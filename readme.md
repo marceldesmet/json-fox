@@ -100,6 +100,27 @@ Jsonviewer VFP form
 
 ![alt text](image.png)
 
+## Changelog
+
+### Version 1.3.5 (November 4, 2025)
+**Bug Fixes:**
+- Fixed negative number parsing - JSON with negative values like `-42` or `-3.14` now parse correctly
+- Improved escape character handling - Changed backslash detection from `'\'` to `CHR(92)` for more reliable operation
+- Added comprehensive bug fix documentation in `json_bugfixes.md`
+
+**Files Changed:**
+- `classes/json/json_tokenizer.prg` - Fixed `isNumeric()` function line 177, escape handling line 114
+- `json_bugfixes.md` - Added detailed analysis of all bug fixes
+
+### Version 1.3.4
+- Previous release (see commit history)
+
+### Version 1.3.3
+- Fixed serialization to always escape special characters in JSON strings
+- Improved `escapeString()` function with CHR(92) for all escape sequences
+
+See [json_bugfixes.md](json_bugfixes.md) for detailed technical information about bug fixes.
+
 ### License
 
 This project is licensed under the MIT License.
